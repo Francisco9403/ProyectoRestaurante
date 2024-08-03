@@ -6,7 +6,8 @@ import jakarta.validation.constraints.NotBlank;
 import java.util.Objects;
 
 
-@Table
+@Table(name = "menu")
+@Entity
 public class Menu {
 
     @Id
@@ -24,6 +25,10 @@ public class Menu {
 
     @NotBlank(message = "Imagen no puede estar vacío")
     private String imagen;
+
+    @ManyToOne
+    @JoinColumn(name = "oferta_id")
+    private Oferta oferta;
 
     public Menu(Long id, String nombre, String descripcion, String imagen, Double precio) {
         this.id = id;
@@ -74,6 +79,14 @@ public class Menu {
 
     public void setImagen(String imagen) {
         this.imagen = imagen;
+    }
+
+    public Oferta getOferta() {
+        return oferta;
+    }
+
+    public void setOferta(Oferta oferta) {
+        this.oferta = oferta;
     }
 
     @Override

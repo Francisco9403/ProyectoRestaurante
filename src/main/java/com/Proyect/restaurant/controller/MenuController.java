@@ -1,18 +1,16 @@
 package com.Proyect.restaurant.controller;
 
+import com.Proyect.restaurant.modelo.Menu;
 import com.Proyect.restaurant.servicio.MenuService;
-import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ProblemDetail;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.UUID;
 
 @RestController
+@RequestMapping("/api/menus")
 public class MenuController {
 
     private final MenuService menuService;
@@ -22,43 +20,46 @@ public class MenuController {
         this.menuService = menuService;
     }
 
-    @PostMapping("create")
-    public ResponseEntity<Boolean> create(@Valid @RequestBody NewBookingDTO newBookingDTO) {
-        State<Void, String> createState = bookingService.create(newBookingDTO);
-        if (createState.getStatus().equals(StatusNotification.ERROR)) {
-            ProblemDetail problemDetail = ProblemDetail.forStatusAndDetail(HttpStatus.BAD_REQUEST, createState.getError());
-            return ResponseEntity.of(problemDetail).build();
+    // Obtener todos los menús
+    @GetMapping
+    public ResponseEntity<List<Menu>> obtenerTodos() {
+        List<Menu> menus = menuService.obtenerTodos();
+        return new ResponseEntity<>(menus, HttpStatus.OK);
+    }
+
+    // Obtener un menú por su ID
+    @GetMapping("/{id}")
+    public ResponseEntity<Menu> obtenerPorId(@PathVariable Long id) {
+        Menu menu = menuService.obtenerPorId(id);
+        if (menu != null) {
+            return new ResponseEntity<>(menu, HttpStatus.OK);
         } else {
-            return ResponseEntity.ok(true);
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
 
-    @GetMapping("check-availability")
-    public ResponseEntity<List<BookedDateDTO>> checkAvailability(@RequestParam UUID listingPublicId) {
-        return ResponseEntity.ok(bookingService.checkAvailability(listingPublicId));
+    // Crear un nuevo menú
+    @PostMapping
+    public ResponseEntity<Menu> crearMenu(@RequestBody Menu menu) {
+        Menu nuevoMenu = menuService.CrearMenu(menu);
+        return new ResponseEntity<>(nuevoMenu, HttpStatus.CREATED);
     }
 
-    @GetMapping("get-booked-listing")
-    public ResponseEntity<List<BookedListingDTO>> getBookedListing() {
-        return ResponseEntity.ok(bookingService.getBookedListing());
-    }
-
-    @DeleteMapping("cancel")
-    public ResponseEntity<UUID> cancel(@RequestParam UUID bookingPublicId,
-                                       @RequestParam UUID listingPublicId,
-                                       @RequestParam boolean byLandlord) {
-        State<UUID, String> cancelState = bookingService.cancel(bookingPublicId, listingPublicId, byLandlord);
-        if (cancelState.getStatus().equals(StatusNotification.ERROR)) {
-            ProblemDetail problemDetail = ProblemDetail.forStatusAndDetail(HttpStatus.BAD_REQUEST, cancelState.getError());
-            return ResponseEntity.of(problemDetail).build();
+    // Eliminar un menú por su ID
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> eliminarMenu(@PathVariable Long id) {
+        if (menuService.obtenerPorId(id) != null) {
+            menuService.eliminarMenu(id);
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         } else {
-            return ResponseEntity.ok(bookingPublicId);
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
 
-    @GetMapping("get-booked-listing-for-landlord")
-    @PreAuthorize("hasAnyRole('" + SecurityUtils.ROLE_LANDLORD + "')")
-    public ResponseEntity<List<BookedListingDTO>> getBookedListingForLandlord() {
-        return ResponseEntity.ok(bookingService.getBookedListingForLandlord());
+    // Contar todos los menús
+    @GetMapping("/count")
+    public ResponseEntity<Long> contarMenu() {
+        long count = menuService.contarMenu();
+        return new ResponseEntity<>(count, HttpStatus.OK);
     }
 }

@@ -8,8 +8,8 @@ import java.util.Objects;
 
 
 @Table(name = "oferta")
+@Entity
 public class Oferta {
-
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -24,8 +24,8 @@ public class Oferta {
     @NotBlank(message = "Porcentaje no puede estar vacío")
     private Double porcentajeDescuento;
 
-    @OneToMany(mappedBy="oferta")
-    private List<Menu> menu;
+    @OneToMany(mappedBy="oferta", cascade = CascadeType.ALL)
+    private List<Menu> menus;
 
     @NotBlank(message = "Imagen no puede estar vacío")
     private String imagen;
@@ -35,8 +35,12 @@ public class Oferta {
         this.nombre = nombre;
         this.descripcion = descripcion;
         this.porcentajeDescuento = porcentajeDescuento;
-        this.menu = menu;
+        this.menus = menu;
         this.imagen = imagen;
+    }
+
+    public Oferta() {
+
     }
 
     public Long getId() {
@@ -72,11 +76,11 @@ public class Oferta {
     }
 
     public List<Menu> getMenu() {
-        return menu;
+        return menus;
     }
 
     public void setMenu(List<Menu> menu) {
-        this.menu = menu;
+        this.menus = menu;
     }
 
     public @NotBlank(message = "Imagen no puede estar vacío") String getImagen() {
@@ -94,7 +98,7 @@ public class Oferta {
                 ", nombre='" + nombre + '\'' +
                 ", descripcion='" + descripcion + '\'' +
                 ", porcentajeDescuento=" + porcentajeDescuento +
-                ", menu=" + menu +
+                ", menu=" + menus +
                 ", imagen='" + imagen + '\'' +
                 '}';
     }
@@ -104,11 +108,11 @@ public class Oferta {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Oferta oferta = (Oferta) o;
-        return Objects.equals(nombre, oferta.nombre) && Objects.equals(descripcion, oferta.descripcion) && Objects.equals(porcentajeDescuento, oferta.porcentajeDescuento) && Objects.equals(menu, oferta.menu) && Objects.equals(imagen, oferta.imagen);
+        return Objects.equals(nombre, oferta.nombre) && Objects.equals(descripcion, oferta.descripcion) && Objects.equals(porcentajeDescuento, oferta.porcentajeDescuento) && Objects.equals(menus, oferta.menus) && Objects.equals(imagen, oferta.imagen);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(nombre, descripcion, porcentajeDescuento, menu, imagen);
+        return Objects.hash(nombre, descripcion, porcentajeDescuento, menus, imagen);
     }
 }
