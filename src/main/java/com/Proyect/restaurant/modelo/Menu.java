@@ -11,15 +11,18 @@ public class Menu {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-
     private Long id;
-    @NotBlank
+
+    @NotBlank(message = "Nombre no puede estar vacío")
     private String nombre;
-    @NotBlank
+
+    @NotBlank(message = "Descripción no puede estar vacío")
     private String descripcion;
-    @NotBlank
+
+    @NotBlank(message = "Precio no puede estar vacío")
     private Double precio;
-    @Transient
+
+    @NotBlank(message = "Imagen no puede estar vacío")
     private String imagen;
 
     public Menu(Long id, String nombre, String descripcion, String imagen, Double precio) {
@@ -31,13 +34,6 @@ public class Menu {
     }
 
     public Menu() {
-    }
-
-    public Menu(String nombre, String descripcion, String imagen, Double precio) {
-        this.nombre = nombre;
-        this.descripcion = descripcion;
-        this.imagen = imagen;
-        this.precio = precio;
     }
 
     public @NotBlank Double getPrecio() {
@@ -103,6 +99,4 @@ public class Menu {
     public int hashCode() {
         return Objects.hash(nombre, descripcion, precio, imagen);
     }
-
-
 }

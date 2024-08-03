@@ -7,58 +7,36 @@ import java.util.List;
 import java.util.Objects;
 
 
-@Table
+@Table(name = "oferta")
 public class Oferta {
 
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-
     private Long id;
-    @NotBlank
+
+    @NotBlank(message = "Nombre no puede estar vacío")
     private String nombre;
-    @NotBlank
+
+    @NotBlank(message = "Descripción no puede estar vacío")
     private String descripcion;
-    @NotBlank
+
+    @NotBlank(message = "Porcentaje no puede estar vacío")
     private Double porcentajeDescuento;
-    @ManyToOne
-    private Menu menu;
-    @NotBlank
-    private List<Menu> menus;
-    @NotBlank
+
+    @OneToMany(mappedBy="oferta")
+    private List<Menu> menu;
+
+    @NotBlank(message = "Imagen no puede estar vacío")
     private String imagen;
 
-
-    public Oferta(Long id, String nombre, String descripcion, Double porcentajeDescuento, Menu menu, List<Menu> menus, String imagen) {
+    public Oferta(Long id, String nombre, String descripcion, Double porcentajeDescuento, List<Menu> menu, String imagen) {
         this.id = id;
         this.nombre = nombre;
         this.descripcion = descripcion;
         this.porcentajeDescuento = porcentajeDescuento;
         this.menu = menu;
-        this.menus = menus;
         this.imagen = imagen;
-    }
-
-    public Oferta() {
-
-    }
-
-    public Oferta(String nombre, String descripcion, Double porcentajeDescuento, Menu menu, List<Menu> menus, String imagen) {
-        this.nombre = nombre;
-        this.descripcion = descripcion;
-        this.porcentajeDescuento = porcentajeDescuento;
-        this.menu = menu;
-        this.menus = menus;
-        this.imagen = imagen;
-    }
-
-
-    public @NotBlank String getNombre() {
-        return nombre;
-    }
-
-    public void setNombre(@NotBlank String nombre) {
-        this.nombre = nombre;
     }
 
     public Long getId() {
@@ -69,55 +47,54 @@ public class Oferta {
         this.id = id;
     }
 
-    public @NotBlank String getDescripcion() {
+    public @NotBlank(message = "Nombre no puede estar vacío") String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(@NotBlank(message = "Nombre no puede estar vacío") String nombre) {
+        this.nombre = nombre;
+    }
+
+    public @NotBlank(message = "Descripción no puede estar vacío") String getDescripcion() {
         return descripcion;
     }
 
-    public void setDescripcion(@NotBlank String descripcion) {
+    public void setDescripcion(@NotBlank(message = "Descripción no puede estar vacío") String descripcion) {
         this.descripcion = descripcion;
     }
 
-    public @NotBlank Double getPrecio() {
+    public @NotBlank(message = "Porcentaje no puede estar vacío") Double getPorcentajeDescuento() {
         return porcentajeDescuento;
     }
 
-    public void setPrecio(@NotBlank Double porcentaje) {
-        this.porcentajeDescuento = porcentaje;
+    public void setPorcentajeDescuento(@NotBlank(message = "Porcentaje no puede estar vacío") Double porcentajeDescuento) {
+        this.porcentajeDescuento = porcentajeDescuento;
     }
 
-    public Menu getMenu() {
+    public List<Menu> getMenu() {
         return menu;
     }
 
-    public void setMenu(Menu menu) {
+    public void setMenu(List<Menu> menu) {
         this.menu = menu;
     }
 
-    public @NotBlank List<Menu> getMenus() {
-        return menus;
-    }
-
-    public void setMenus(@NotBlank List<Menu> menus) {
-        this.menus = menus;
-    }
-
-    public @NotBlank String getImagen() {
+    public @NotBlank(message = "Imagen no puede estar vacío") String getImagen() {
         return imagen;
     }
 
-    public void setImagen(@NotBlank String imagen) {
+    public void setImagen(@NotBlank(message = "Imagen no puede estar vacío") String imagen) {
         this.imagen = imagen;
     }
 
     @Override
     public String toString() {
-        return "Ofertas{" +
+        return "Oferta{" +
                 "id=" + id +
                 ", nombre='" + nombre + '\'' +
                 ", descripcion='" + descripcion + '\'' +
-                ", precio=" + porcentajeDescuento +
+                ", porcentajeDescuento=" + porcentajeDescuento +
                 ", menu=" + menu +
-                ", menus=" + menus +
                 ", imagen='" + imagen + '\'' +
                 '}';
     }
@@ -126,14 +103,12 @@ public class Oferta {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Oferta ofertas = (Oferta) o;
-        return Objects.equals(nombre, ofertas.nombre) && Objects.equals(descripcion, ofertas.descripcion) && Objects.equals(porcentajeDescuento, ofertas.porcentajeDescuento) && Objects.equals(menu, ofertas.menu) && Objects.equals(menus, ofertas.menus) && Objects.equals(imagen, ofertas.imagen);
+        Oferta oferta = (Oferta) o;
+        return Objects.equals(nombre, oferta.nombre) && Objects.equals(descripcion, oferta.descripcion) && Objects.equals(porcentajeDescuento, oferta.porcentajeDescuento) && Objects.equals(menu, oferta.menu) && Objects.equals(imagen, oferta.imagen);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(nombre, descripcion, porcentajeDescuento, menu, menus, imagen);
+        return Objects.hash(nombre, descripcion, porcentajeDescuento, menu, imagen);
     }
-
-
 }

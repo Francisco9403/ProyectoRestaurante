@@ -22,11 +22,13 @@ public class OfertaServiceImpl implements OfertaService{
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<Oferta> obtenerTodos() {
         return ofertasRepository.findAll();
     }
 
     @Override
+    @Transactional(readOnly = true)
     public Oferta obtenerPorId(Long id) {
         return ofertasRepository.findById(id).orElse(null);
     }
@@ -44,6 +46,7 @@ public class OfertaServiceImpl implements OfertaService{
     }
 
     @Override
+    @Transactional(readOnly = true)
     public long contarOferta() {
         return ofertasRepository.count();
     }

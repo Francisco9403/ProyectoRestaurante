@@ -20,11 +20,13 @@ public class MenuServiceImpl implements MenuService{
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<Menu> obtenerTodos() {
         return menuRepository.findAll();
     }
 
     @Override
+    @Transactional(readOnly = true)
     public Menu obtenerPorId(Long id) {
         return menuRepository.findById(id).orElse(null);
     }
@@ -41,6 +43,7 @@ public class MenuServiceImpl implements MenuService{
     }
 
     @Override
+    @Transactional(readOnly = true)
     public long contarMenu() {
         return menuRepository.count();
     }
