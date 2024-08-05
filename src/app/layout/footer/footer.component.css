@@ -1,0 +1,11 @@
+/*@import "./../../../assets/css/variables"*/
+
+.footer {
+  background-color: #F7F7F7;
+}
+
+fa-icon {
+  margin-left: 10px;
+  font-size: 3px;
+  margin-right: 10px;
+}
