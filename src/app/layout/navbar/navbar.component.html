@@ -1,1 +1,15 @@
-<p>navbar works!</p>
+<div class="sticky top-0 border-bottom-1 border-gray-200 shadow-1 z-1">
+  <p-toolbar [styleClass]="'bg-white border-top-none border-x-none border-noround sm:flex sm:justify-content-center sm:w-full md:flex md:justify-content-between px-8'">
+    <div class="p-toolbar-group-start pl-1 sm:hidden md:flex cursor-pointer" routerLink="/">
+      <fa-icon [icon]="['fab', 'airbnb']" size="3x" class="text-primary"></fa-icon>
+      <div class="font-bold text-primary pl-2 text-2xl">airbnb</div>
+    </div>
+    <div class="p-toolbar-group-end sm:hidden md:flex">
+      <p-menu #menu [model]="currentMenuItems" [popup]="true" styleClass="border-round-xl mt-1"></p-menu>
+      <button (click)="menu.toggle($event)" class="menu flex align-content-center justify-content-around ml-2 pl-3 p-2 border-gray-300 focus:shadow-none hover:shadow-1 border-round-3xl bg-white p-button">
+        <fa-icon [icon]="'bars'" class="text-sm text-dark mr-3"></fa-icon>
+        <app-avatar [imageUrl]="connectedUser.imageUrl" avatarSize="avatar-sm"></app-avatar>
+      </button>
+    </div>
+  </p-toolbar>
+</div>
