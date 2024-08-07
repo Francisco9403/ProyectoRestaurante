@@ -1,10 +1,11 @@
-package com.Proyect.restaurant.servicio;
+package com.proyect.restaurant.servicio;
 
-import com.Proyect.restaurant.dto.ReadUserDTO;
-import com.Proyect.restaurant.modelo.SecurityUtils;
-import com.Proyect.restaurant.modelo.User;
-import com.Proyect.restaurant.modelo.UserMapper;
-import com.Proyect.restaurant.repositorio.UserRepository;
+import com.proyect.restaurant.config.SecurityUtils;
+import com.proyect.restaurant.dto.ReadUserDTO;
+import com.proyect.restaurant.modelo.User;
+import com.proyect.restaurant.modelo.UserMapper;
+import com.proyect.restaurant.repositorio.UserRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
@@ -22,6 +23,7 @@ public class UserService {
     private final UserRepository userRepository;
     private final UserMapper userMapper;
 
+    @Autowired
     public UserService(UserRepository userRepository, UserMapper userMapper) {
         this.userRepository = userRepository;
         this.userMapper = userMapper;

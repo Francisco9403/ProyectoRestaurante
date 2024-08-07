@@ -1,7 +1,7 @@
-package com.Proyect.restaurant.modelo;
+package com.proyect.restaurant.config;
 
-import com.Proyect.restaurant.modelo.Authority;
-import com.Proyect.restaurant.modelo.User;
+import com.proyect.restaurant.modelo.Authority;
+import com.proyect.restaurant.modelo.User;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;

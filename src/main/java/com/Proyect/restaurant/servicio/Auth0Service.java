@@ -1,6 +1,8 @@
-package com.Proyect.restaurant.servicio;
+package com.proyect.restaurant.servicio;
 
-import com.Proyect.restaurant.exepciones.UserException;
+import com.proyect.restaurant.config.SecurityUtils;
+import com.proyect.restaurant.dto.ReadUserDTO;
+import com.proyect.restaurant.exepciones.UserException;
 import com.auth0.client.auth.AuthAPI;
 import com.auth0.client.mgmt.ManagementAPI;
 import com.auth0.client.mgmt.filter.FieldsFilter;
@@ -9,8 +11,6 @@ import com.auth0.json.auth.TokenHolder;
 import com.auth0.json.mgmt.users.User;
 import com.auth0.net.Response;
 import com.auth0.net.TokenRequest;
-import com.Proyect.restaurant.modelo.SecurityUtils;
-import com.Proyect.restaurant.dto.ReadUserDTO;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 

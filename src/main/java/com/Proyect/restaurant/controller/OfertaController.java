@@ -1,7 +1,7 @@
-package com.Proyect.restaurant.controller;
+package com.proyect.restaurant.controller;
 
-import com.Proyect.restaurant.modelo.Oferta;
-import com.Proyect.restaurant.servicio.OfertaService;
+import com.proyect.restaurant.modelo.Oferta;
+import com.proyect.restaurant.servicio.OfertaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

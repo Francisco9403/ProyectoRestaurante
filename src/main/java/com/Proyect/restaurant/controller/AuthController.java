@@ -1,8 +1,8 @@
-package com.Proyect.restaurant.controller;
+package com.proyect.restaurant.controller;
 
+import com.proyect.restaurant.dto.ReadUserDTO;
+import com.proyect.restaurant.servicio.UserService;
 import jakarta.servlet.http.HttpServletRequest;
-import com.Proyect.restaurant.servicio.UserService;
-import com.Proyect.restaurant.dto.ReadUserDTO;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

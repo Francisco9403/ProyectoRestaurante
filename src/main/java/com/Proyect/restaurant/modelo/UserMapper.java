@@ -1,9 +1,7 @@
-package com.Proyect.restaurant.modelo;
+package com.proyect.restaurant.modelo;
 
 
-import com.Proyect.restaurant.dto.ReadUserDTO;
-import com.Proyect.restaurant.modelo.Authority;
-import com.Proyect.restaurant.modelo.User;
+import com.proyect.restaurant.dto.ReadUserDTO;
 import org.mapstruct.Mapper;
 
 @Mapper(componentModel = "spring")

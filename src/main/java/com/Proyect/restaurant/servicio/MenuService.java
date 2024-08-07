@@ -1,7 +1,7 @@
-package com.Proyect.restaurant.servicio;
+package com.proyect.restaurant.servicio;
 
 
-import com.Proyect.restaurant.modelo.Menu;
+import com.proyect.restaurant.modelo.Menu;
 
 import java.util.List;
 

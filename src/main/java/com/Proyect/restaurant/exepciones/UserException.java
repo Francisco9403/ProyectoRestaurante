@@ -1,4 +1,4 @@
-package com.Proyect.restaurant.exepciones;
+package com.proyect.restaurant.exepciones;
 
 public class UserException extends RuntimeException {
 

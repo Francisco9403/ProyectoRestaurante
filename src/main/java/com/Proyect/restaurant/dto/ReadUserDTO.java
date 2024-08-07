@@ -1,4 +1,4 @@
-package com.Proyect.restaurant.dto;
+package com.proyect.restaurant.dto;
 
 import java.util.Set;
 import java.util.UUID;

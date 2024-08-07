@@ -1,14 +1,15 @@
-package com.Proyect.restaurant.modelo;
+package com.proyect.restaurant.modelo;
 
 import jakarta.persistence.*;
 import org.hibernate.annotations.UuidGenerator;
+
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 import java.util.UUID;
 
 @Entity
-@Table(name = "User")
+@Table(name = "user")
 public class User extends AbstractAuditingEntity<Long> {
 
     @Id
