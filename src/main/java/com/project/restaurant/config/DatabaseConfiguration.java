@@ -14,4 +14,4 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @EnableTransactionManagement
 @EnableJpaAuditing
 public class DatabaseConfiguration {
-}git reset
+}
