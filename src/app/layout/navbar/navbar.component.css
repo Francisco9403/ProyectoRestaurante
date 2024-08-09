@@ -1,27 +1,89 @@
-.search-icon {
-  width: 15px;
-  height: 30px;
-  border-radius: 70px;
-  padding: 15px;
+/* Estilos generales para el contenedor del navbar */
+.navbar-container {
+  width: 100%; /* Asegura que el navbar cubra el ancho completo de la ventana */
+  box-sizing: border-box; /* Incluye padding y border en el ancho total */
 }
 
-.guest-btn {
-  padding: 5px 10px !important;
+/* Estilos para la barra de herramientas */
+.toolbar {
+  display: flex;
+  justify-content: space-between; /* Distribuye el contenido a los extremos */
+  align-items: center;
+  padding: 0 1rem; /* Padding horizontal para la barra de herramientas */
+  box-sizing: border-box;
 }
 
-.separator {
-  height: 23px;
+/* Estilos para el grupo de elementos a la izquierda */
+.toolbar-group-left {
+  display: flex;
+  align-items: center;
+  padding-right: 2rem; /* Padding derecho para separar del grupo derecho */
 }
 
-.middle-group {
-  height: 50px;
+/* Estilos para el contenedor del logo */
+.logo-container {
+  display: flex;
+  align-items: center;
 }
 
-.menu {
-  width: 90px;
-  height: 50px;
+/* Estilos para la imagen del logo */
+.logo-container img {
+  max-height: 40px; /* Ajusta la altura del logo */
+  height: auto;
 }
 
-.search {
-  width: 380px;
+/* Estilos para el texto del logo */
+.logo-text {
+  font-size: 1.5rem; /* Tamaño de fuente para el texto del logo */
+  font-weight: bold;
+  color: #333; /* Color del texto del logo */
+  margin-left: 0.5rem; /* Espaciado a la izquierda del logo */
+}
+
+/* Estilos para el grupo de elementos a la derecha */
+.toolbar-group-right {
+  display: flex;
+  align-items: center;
+  padding-left: 70rem; /* Padding izquierdo para separar del grupo izquierdo */
+}
+
+/* Estilos para el botón del menú */
+.menu-toggle-button {
+  display: flex;
+  align-items: center;
+  padding: 0.5rem;
+  border: 1px solid #ccc; /* Borde del botón del menú */
+  border-radius: 1.5rem; /* Bordes redondeados */
+  background-color: #fff; /* Fondo blanco */
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2); /* Sombra sutil */
+  cursor: pointer;
+  transition: box-shadow 0.3s ease; /* Transición para el efecto de sombra */
+}
+
+/* Estilo del ícono del menú */
+.menu-icon {
+  margin-right: 0.5rem; /* Espaciado a la derecha del ícono del menú */
+}
+
+/* Estilos para el menú desplegable */
+.menu-popup {
+  border-radius: 0.5rem; /* Bordes redondeados */
+  margin-top: 0.5rem; /* Espaciado superior */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Sombra para el menú */
+}
+
+/* Alineación de elementos del toolbar en pantallas pequeñas */
+@media (max-width: 768px) {
+  .toolbar {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .toolbar-group-left {
+    margin-bottom: 1rem; /* Espaciado inferior en pantallas pequeñas */
+  }
+
+  .toolbar-group-right {
+    display: none; /* Oculta el grupo de elementos finales en pantallas pequeñas */
+  }
 }
