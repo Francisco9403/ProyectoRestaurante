@@ -7,12 +7,16 @@
       </div>
     </div>
     <div class="toolbar-group-right">
+      <div class="nav-buttons">
+        <button class="nav-button"><b>Inicio</b></button>
+        <button class="nav-button"><b>Menú</b></button>
+        <button class="nav-button"><b>Contactos</b></button>
+      </div>
       <p-menu #menu [model]="currentMenuItems" [popup]="true" class="menu-popup"></p-menu>
-      <button (click)="menu.toggle($event)" class="menu-toggle-button">
+      <button (click)="menu.toggle($event)" class="menu-toggle-button text-center" >
         <fa-icon [icon]="'bars'" class="menu-icon"></fa-icon>
-        <app-avatar [imageUrl]="connectedUser.imageUrl" avatarSize="avatar-sm"></app-avatar>
+        <app-avatar [imageUrl]="connectedUser.imageUrl" avatarSize="avatar-sm" class="avatar12 text-center"></app-avatar>
       </button>
     </div>
   </p-toolbar>
 </div>
-
