@@ -9,7 +9,6 @@
   padding: 2rem; /* Espaciado interno */
   border-radius: 0.5rem; /* Bordes redondeados */
   margin: 0; /* Elimina el margen para que se extienda a todo el ancho */
-  width: 100vw; /* Ancho completo de la ventana del navegador */
   box-sizing: border-box; /* Asegura que el padding se incluya en el ancho total */
 }
 

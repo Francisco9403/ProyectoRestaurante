@@ -58,21 +58,26 @@
   display: flex;
   align-items: center;
   background-color: transparent;
-  border: none;
   cursor: pointer;
+  border-radius: 18% !important;
 }
 
 .menu-icon {
   font-size: 20px;
-  margin-right: 10px;
 }
 
-.app-avatar {
-  border-radius: 50%;
-  border: 2px solid #6c757d;
-}
+/*.app-avatar {*/
+/*  border-radius: 50%;*/
+/*  border: 2px solid #6c757d;*/
+/*}*/
 
 .avatar12{
   align-items: center;
+  align-content: center;
+}
+
+.avatar-sm {
+  width: 35.75px;
+  height: 35.75px;
   align-content: center;
 }

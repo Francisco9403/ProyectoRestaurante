@@ -8,13 +8,13 @@
     </div>
     <div class="toolbar-group-right">
       <div class="nav-buttons">
-        <button class="nav-button"><b>Inicio</b></button>
-        <button class="nav-button"><b>Menú</b></button>
-        <button class="nav-button"><b>Contactos</b></button>
+        <a class="nav-button"><b>Inicio</b></a>
+        <a routerLink="/menu" class="nav-button"><b>Menú</b></a>
+        <a class="nav-button"><b>Contactos</b></a>
       </div>
       <p-menu #menu [model]="currentMenuItems" [popup]="true" class="menu-popup"></p-menu>
       <button (click)="menu.toggle($event)" class="menu-toggle-button text-center" >
-        <fa-icon [icon]="'bars'" class="menu-icon"></fa-icon>
+        <fa-icon [icon]="'bars'" class="menu-icon avatar-sm"></fa-icon>
         <app-avatar [imageUrl]="connectedUser.imageUrl" avatarSize="avatar-sm" class="avatar12 text-center"></app-avatar>
       </button>
     </div>

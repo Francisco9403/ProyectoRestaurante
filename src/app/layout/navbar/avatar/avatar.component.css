@@ -5,6 +5,7 @@
 .avatar-sm {
   width: 35.75px;
   height: 35.75px;
+  align-content: center;
 }
 
 .avatar-xl {
