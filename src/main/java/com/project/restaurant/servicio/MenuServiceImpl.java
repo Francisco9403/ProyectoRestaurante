@@ -2,17 +2,18 @@ package com.project.restaurant.servicio;
 
 import com.project.restaurant.modelo.Menu;
 import com.project.restaurant.repositorio.MenuRepository;
+import com.project.restaurant.servicio.MenuService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
 @Service
 public class MenuServiceImpl implements MenuService {
 
-
     private final MenuRepository menuRepository;
-
 
     @Autowired
     public MenuServiceImpl(MenuRepository menuRepository) {
@@ -21,8 +22,9 @@ public class MenuServiceImpl implements MenuService {
 
     @Override
     @Transactional(readOnly = true)
-    public List<Menu> obtenerTodos() {
-        return menuRepository.findAll();
+    public Page<Menu> obtenerTodos(int page, int size, String nombre) {
+        Pageable pageable = PageRequest.of(page, size);
+        return menuRepository.findByNombreContaining(nombre, pageable);
     }
 
     @Override
@@ -34,7 +36,8 @@ public class MenuServiceImpl implements MenuService {
     @Override
     @Transactional
     public Menu CrearMenu(Menu menu) {
-        return menuRepository.save(menu);    }
+        return menuRepository.save(menu);
+    }
 
     @Override
     @Transactional

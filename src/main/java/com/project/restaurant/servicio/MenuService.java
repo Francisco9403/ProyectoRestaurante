@@ -2,12 +2,12 @@ package com.project.restaurant.servicio;
 
 
 import com.project.restaurant.modelo.Menu;
-
-import java.util.List;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 public interface MenuService {
 
-    List<Menu> obtenerTodos();
+    Page<Menu> obtenerTodos(int page, int size, String nombre);
 
     Menu obtenerPorId(Long id);
 
