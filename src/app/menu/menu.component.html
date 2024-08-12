@@ -1,12 +1,24 @@
+<div>
+  <input type="text" [(ngModel)]="filterName" placeholder="Filtrar por nombre" />
+  <button (click)="applyFilter()">Aplicar filtro</button>
+</div>
+<div class="container">
+  <h1 class="page-title">Nuestros Productos</h1>
+  <div class="card-container">
 @for (menu of menuItems; track menu) {
   <div class="card" style="width: 18rem;">
-  <img [src]="menu.imagen" class="card-img-top" alt="{{ menu.nombre }}">
-  <div class="card-body">
-    <h5 class="card-title">{{ menu.nombre }}</h5>
-    <p class="card-text">{{ menu.descripcion }}</p>
-    <p class="card-text">Precio: {{ menu.precio }}</p>
-    <a href="#" class="btn btn-primary">Ver detalles</a>
-  </div>
+    <img [src]="menu.imagen" class="card-img-top" alt="{{ menu.nombre }}">
+    <div class="card-body" style="overflow:hidden">
+      <h5 class="card-title">{{ menu.nombre }}</h5>
+      <p class="card-text">{{ menu.descripcion }}</p>
+      <p class="card-text">Precio: {{ menu.precio }}</p>
+      <!--          <a href="#" class="btn btn-primary">Ver detalles</a>-->
+    </div>
   </div>
 }
-asd
+  </div>
+</div>
+<div>
+  <button (click)="prevPage()" [disabled]="currentPage === 0">Anterior</button>
+  <button (click)="nextPage()" [disabled]="currentPage >= totalPages - 1">Siguiente</button>
+</div>
