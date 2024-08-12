@@ -1,6 +1,6 @@
-<div>
-  <input type="text" [(ngModel)]="filterName" placeholder="Filtrar por nombre" />
-  <button (click)="applyFilter()">Aplicar filtro</button>
+<div class="filter-container">
+  <input type="text" class="form-control" [(ngModel)]="filterName" placeholder="Filtrar por nombre" />
+  <button class="btn btn-secondary" (click)="applyFilter()">Aplicar filtro</button>
 </div>
 <div class="container">
   <h1 class="page-title">Nuestros Productos</h1>
@@ -18,7 +18,8 @@
 }
   </div>
 </div>
-<div>
-  <button (click)="prevPage()" [disabled]="currentPage === 0">Anterior</button>
-  <button (click)="nextPage()" [disabled]="currentPage >= totalPages - 1">Siguiente</button>
+<div class="pagination-container">
+  <button class="btn btn-secondary" (click)="prevPage()" [disabled]="currentPage === 0">Anterior</button>
+  <span class="page-indicator">Página {{ currentPage + 1 }} de {{ totalPages }}</span>
+  <button class="btn btn-secondary" (click)="nextPage()" [disabled]="currentPage >= totalPages - 1">Siguiente</button>
 </div>

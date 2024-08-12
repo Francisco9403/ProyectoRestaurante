@@ -25,7 +25,7 @@ export class MenuComponent implements OnInit {
   }
 
   loadMenus(): void {
-    this.menuService.getMenuItems(this.currentPage, 1, this.filterName).subscribe((data: Page<MenuItem>) => {
+    this.menuService.getMenuItems(this.currentPage, 3, this.filterName).subscribe((data: Page<MenuItem>) => {
       console.log("Data received:", data);
 
       // Accede a las propiedades anidadas en `page`
