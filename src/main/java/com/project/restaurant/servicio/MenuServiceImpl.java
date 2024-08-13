@@ -22,10 +22,11 @@ public class MenuServiceImpl implements MenuService {
 
     @Override
     @Transactional(readOnly = true)
-    public Page<Menu> obtenerTodos(int page, int size, String nombre) {
+    public Page<Menu> obtenerTodos(int page, int size, String nombre, Double precioMin, Double precioMax) {
         Pageable pageable = PageRequest.of(page, size);
-        return menuRepository.findByNombreContaining(nombre, pageable);
+        return menuRepository.findByNombreContainingAndPrecioBetween(nombre, precioMin, precioMax, pageable);
     }
+
 
     @Override
     @Transactional(readOnly = true)

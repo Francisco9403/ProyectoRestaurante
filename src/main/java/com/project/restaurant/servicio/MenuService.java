@@ -7,7 +7,7 @@ import org.springframework.data.domain.Pageable;
 
 public interface MenuService {
 
-    Page<Menu> obtenerTodos(int page, int size, String nombre);
+    Page<Menu> obtenerTodos(int page, int size, String nombre, Double precioMin, Double precioMax);
 
     Menu obtenerPorId(Long id);
 

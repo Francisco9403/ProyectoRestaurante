@@ -24,10 +24,12 @@ public class MenuController {
 
     @GetMapping
     public ResponseEntity<Page<Menu>> obtenerMenus(@RequestParam(defaultValue = "0") int page,
-                                   @RequestParam(defaultValue = "1") int size,
-                                   @RequestParam(defaultValue = "") String nombre) {
+                                                   @RequestParam(defaultValue = "1") int size,
+                                                   @RequestParam(defaultValue = "") String nombre,
+                                                   @RequestParam(defaultValue = "0") Double precioMin,
+                                                   @RequestParam(defaultValue = "10000") Double precioMax) {
 
-        Page<Menu> menus = menuService.obtenerTodos(page, size, nombre);
+        Page<Menu> menus = menuService.obtenerTodos(page, size, nombre, precioMin, precioMax);
         return new ResponseEntity<>(menus, HttpStatus.OK);
     }
 
