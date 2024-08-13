@@ -1,10 +1,18 @@
 <div class="filter-container">
   <input type="text" class="form-control" [(ngModel)]="filterName" placeholder="Filtrar por nombre" />
+  <input type="number" class="form-control" [(ngModel)]="filterPriceMin" placeholder="Precio mínimo" />
+  <input type="number" class="form-control" [(ngModel)]="filterPriceMax" placeholder="Precio máximo" />
   <button class="btn btn-secondary" (click)="applyFilter()">Aplicar filtro</button>
 </div>
+
 <div class="container">
   <h1 class="page-title">Nuestros Productos</h1>
-  <div class="card-container">
+<!--  <div class="filter-container">-->
+<!--  Esto es si quere poner varios debajo del titulo-->
+<!--    <input type="text" class="form-control" [(ngModel)]="filterName" placeholder="Filtrar por nombre" />-->
+<!--    <button class="btn btn-secondary" (click)="applyFilter()">Aplicar filtro</button>-->
+<!--  </div>-->
+<div class="card-container">
 @for (menu of menuItems; track menu) {
   <div class="card" style="width: 18rem;">
     <img [src]="menu.imagen" class="card-img-top" alt="{{ menu.nombre }}">

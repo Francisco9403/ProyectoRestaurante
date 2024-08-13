@@ -1,37 +1,8 @@
+// En menu.service.ts
 import { HttpClient, HttpParams } from '@angular/common/http';
-import {environment} from "../environments/environment";
-import {map, Observable, tap} from "rxjs";
-import {Injectable} from "@angular/core";
-
-@Injectable({
-  providedIn: 'root'
-})
-export class MenuService {
-
-  private apiUrl = `${environment.API_URL}/menus`;
-
-  constructor(private http: HttpClient) { }
-
-  getMenuItems(page: number = 0, size: number = 1, nombre: string = ''): Observable<Page<MenuItem>> {
-    let params = new HttpParams()
-      .set('page', page.toString())
-      .set('size', size.toString())
-      .set('nombre', nombre);
-
-    return this.http.get<any>(this.apiUrl, { params }).pipe(
-      map(response => ({
-        content: response.content,
-        page: {
-          number: response.page.number,
-          size: response.page.size,
-          totalElements: response.page.totalElements,
-          totalPages: response.page.totalPages
-        }
-      }))
-    );
-  }
-
-}
+import { environment } from "../environments/environment";
+import { map, Observable } from "rxjs";
+import { Injectable } from "@angular/core";
 
 export interface Page<T> {
   content: T[];
@@ -58,4 +29,35 @@ export interface Oferta {
   descripcion: string;
   porcentajeDescuento: number;
   menus: MenuItem[];
+}
+
+@Injectable({
+  providedIn: 'root'
+})
+export class MenuService {
+
+  private apiUrl = `${environment.API_URL}/menus`;
+
+  constructor(private http: HttpClient) { }
+
+  getMenuItems(page: number = 0, size: number = 1, nombre: string = '', precioMin: number = 0, precioMax: number = 10000): Observable<Page<MenuItem>> {
+    let params = new HttpParams()
+      .set('page', page.toString())
+      .set('size', size.toString())
+      .set('nombre', nombre)
+      .set('precioMin', precioMin.toString())
+      .set('precioMax', precioMax.toString());
+
+    return this.http.get<any>(this.apiUrl, { params }).pipe(
+      map(response => ({
+        content: response.content,
+        page: {
+          number: response.page.number,
+          size: response.page.size,
+          totalElements: response.page.totalElements,
+          totalPages: response.page.totalPages
+        }
+      }))
+    );
+  }
 }
