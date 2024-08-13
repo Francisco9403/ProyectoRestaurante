@@ -11,16 +11,21 @@
 .filter-container {
   display: flex;
   justify-content: center;
-  gap: 10px;
+  align-items: center; /* Alinea verticalmente */
+  gap: 20px; /* Ajusta el espacio entre los elementos */
   margin-bottom: 20px;
+  background-color: #f8f9fa; /* Fondo del contenedor de filtros */
+  padding: 15px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra */
 }
 
-.form-control {
+.filter-container .form-control {
   padding: 5px 10px;
   font-size: 1rem;
 }
 
-.btn-secondary {
+.filter-container .btn-secondary {
   background-color: #6c757d;
   border: none;
   padding: 5px 15px;
@@ -28,7 +33,7 @@
   text-transform: uppercase;
 }
 
-.btn-secondary:hover {
+.filter-container .btn-secondary:hover {
   background-color: #5a6268;
 }
 
@@ -78,19 +83,8 @@
   background-color: #0056b3;
 }
 
-
-.card-body{
+.card-body {
   padding-bottom: 13px;
-}
-.filter-container {
-  display: flex;
-  justify-content: center;
-  gap: 10px;
-  margin-bottom: 20px;
-  background-color: #f8f9fa; /* quitar si no queres fondo*/
-  padding: 15px;
-  border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);/* quitar si no queres fondo*/
 }
 
 .pagination-container {
@@ -129,4 +123,18 @@
   font-size: 1rem;
   border: 1px solid #ced4da;
   border-radius: 4px;
+}
+
+.price-slider-container {
+  display: flex;
+  align-items: center; /* Alinea verticalmente */
+  gap: 20px; /* Ajusta el espacio entre el slider y el label */
+}
+
+.price-slider-container label {
+  font-size: 1rem;
+}
+
+.price-slider-container input[type="range"] {
+  width: 100px; /* Ajusta el ancho del slider */
 }

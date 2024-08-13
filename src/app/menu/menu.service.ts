@@ -40,7 +40,7 @@ export class MenuService {
 
   constructor(private http: HttpClient) { }
 
-  getMenuItems(page: number = 0, size: number = 1, nombre: string = '', precioMin: number = 0, precioMax: number = 10000): Observable<Page<MenuItem>> {
+  getMenuItems(page: number = 0, size: number = 1, nombre: string = '', precioMin: number = 0, precioMax: number = 100): Observable<Page<MenuItem>> {
     let params = new HttpParams()
       .set('page', page.toString())
       .set('size', size.toString())

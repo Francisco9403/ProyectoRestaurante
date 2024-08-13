@@ -16,7 +16,7 @@ export class MenuComponent implements OnInit {
   totalPages: number = 0;
   filterName: string = '';
   filterPriceMin: number = 0;
-  filterPriceMax: number = 100000;
+  filterPriceMax: number = 100;
 
   constructor(private menuService: MenuService) { }
 
@@ -28,11 +28,9 @@ export class MenuComponent implements OnInit {
     this.menuService.getMenuItems(this.currentPage, 3, this.filterName, this.filterPriceMin, this.filterPriceMax).subscribe((data: Page<MenuItem>) => {
       console.log("Data received:", data);
 
-      // Accede a las propiedades anidadas en page
       this.menuItems = data.content;
       this.totalPages = data.page.totalPages;
       this.currentPage = data.page.number;
-      // Puedes ajustar size y totalElements si los necesitas
       console.log("number: " + data.page.number);
       console.log("totalPages: " + data.page.totalPages);
       console.log("size: " + data.page.size);

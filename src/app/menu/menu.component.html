@@ -1,10 +1,16 @@
 <div class="filter-container">
   <input type="text" class="form-control" [(ngModel)]="filterName" placeholder="Filtrar por nombre" />
-  <input type="number" class="form-control" [(ngModel)]="filterPriceMin" placeholder="Precio mínimo" />
-  <input type="number" class="form-control" [(ngModel)]="filterPriceMax" placeholder="Precio máximo" />
+
+  <div class="price-slider-container">
+    <label for="priceMin">Precio mínimo: {{ filterPriceMin }}</label>
+    <input id="priceMin" type="range" min="0" max="100" step="1" [(ngModel)]="filterPriceMin" (input)="applyFilter()" />
+
+    <label for="priceMax">Precio máximo: {{ filterPriceMax }}</label>
+    <input id="priceMax" type="range" min="0" max="100" step="1" [(ngModel)]="filterPriceMax" (input)="applyFilter()" />
+  </div>
+
   <button class="btn btn-secondary" (click)="applyFilter()">Aplicar filtro</button>
 </div>
-
 <div class="container">
   <h1 class="page-title">Nuestros Productos</h1>
 <!--  <div class="filter-container">-->
