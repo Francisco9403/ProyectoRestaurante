@@ -1,4 +1,3 @@
-// En menu.service.ts
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { environment } from "../environments/environment";
 import { map, Observable } from "rxjs";
@@ -40,13 +39,19 @@ export class MenuService {
 
   constructor(private http: HttpClient) { }
 
-  getMenuItems(page: number = 0, size: number = 1, nombre: string = '', precioMin: number = 0, precioMax: number = 100): Observable<Page<MenuItem>> {
+  getMenuItems(page: number = 0, size: number = 1, nombre: string = '', precioMin: number | null = null, precioMax: number | null = null): Observable<Page<MenuItem>> {
     let params = new HttpParams()
       .set('page', page.toString())
       .set('size', size.toString())
-      .set('nombre', nombre)
-      .set('precioMin', precioMin.toString())
-      .set('precioMax', precioMax.toString());
+      .set('nombre', nombre);
+
+    // Solo agregar los filtros de precio si tienen valores definidos
+    if (precioMin !== null) {
+      params = params.set('precioMin', precioMin.toString());
+    }
+    if (precioMax !== null) {
+      params = params.set('precioMax', precioMax.toString());
+    }
 
     return this.http.get<any>(this.apiUrl, { params }).pipe(
       map(response => ({
