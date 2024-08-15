@@ -10,6 +10,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Optional;
+
 @Service
 public class MenuServiceImpl implements MenuService {
 
@@ -30,8 +32,8 @@ public class MenuServiceImpl implements MenuService {
 
     @Override
     @Transactional(readOnly = true)
-    public Menu obtenerPorId(Long id) {
-        return menuRepository.findById(id).orElse(null);
+    public Optional<Menu> obtenerPorId(Long id) {
+        return menuRepository.findById(id);
     }
 
     @Override
