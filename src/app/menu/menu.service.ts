@@ -19,7 +19,7 @@ export interface MenuItem {
   descripcion: string;
   precio: number;
   imagen: string;
-  oferta: Oferta;
+  oferta: Oferta | null;
 }
 
 export interface Oferta {
@@ -45,7 +45,6 @@ export class MenuService {
       .set('size', size.toString())
       .set('nombre', nombre);
 
-    // Solo agregar los filtros de precio si tienen valores definidos
     if (precioMin !== null) {
       params = params.set('precioMin', precioMin.toString());
     }
@@ -53,16 +52,23 @@ export class MenuService {
       params = params.set('precioMax', precioMax.toString());
     }
 
-    return this.http.get<any>(this.apiUrl, { params }).pipe(
-      map(response => ({
-        content: response.content,
-        page: {
-          number: response.page.number,
-          size: response.page.size,
-          totalElements: response.page.totalElements,
-          totalPages: response.page.totalPages
-        }
-      }))
-    );
+    return this.http.get<Page<MenuItem>>(this.apiUrl, { params });
   }
+
+  createMenuItem(menuItem: MenuItem): Observable<MenuItem> {
+    return this.http.post<MenuItem>(this.apiUrl, menuItem);
+  }
+
+  updateMenuItem(id: number, menuItem: MenuItem): Observable<MenuItem> {
+    return this.http.put<MenuItem>(`${this.apiUrl}/${id}`, menuItem);
+  }
+
+  deleteMenuItem(id: number): Observable<void> {
+    return this.http.delete<void>(`${this.apiUrl}/${id}`);
+  }
+
+  getMenuItemById(id: number): Observable<MenuItem> {
+    return this.http.get<MenuItem>(`${this.apiUrl}/${id}`);
+  }
+
 }

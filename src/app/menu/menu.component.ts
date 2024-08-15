@@ -1,12 +1,14 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, inject, OnInit} from '@angular/core';
 import { MenuItem, MenuService, Page } from "./menu.service";
 import { FormsModule } from "@angular/forms";
+import { AuthService } from "../auth/auth.service";
+import {RouterLink} from "@angular/router";
 
 @Component({
   selector: 'app-menu',
   templateUrl: './menu.component.html',
   standalone: true,
-  imports: [FormsModule],
+  imports: [FormsModule, RouterLink],
   styleUrls: ['./menu.component.css']
 })
 export class MenuComponent implements OnInit {
@@ -15,8 +17,9 @@ export class MenuComponent implements OnInit {
   currentPage: number = 0;
   totalPages: number = 0;
   filterName: string = '';
-  filterPriceMin: number | null = null;
-  filterPriceMax: number | null = null;
+  filterPriceMin: number = 0;
+  filterPriceMax: number = 100;
+  authService = inject(AuthService);
 
   constructor(private menuService: MenuService) { }
 
@@ -25,21 +28,11 @@ export class MenuComponent implements OnInit {
   }
 
   loadMenus(): void {
-    // Validación para manejar precios vacíos o nulos
-    const priceMin = this.filterPriceMin !== null ? this.filterPriceMin : undefined;
-    const priceMax = this.filterPriceMax !== null ? this.filterPriceMax : undefined;
-
-    this.menuService.getMenuItems(this.currentPage, 3, this.filterName, priceMin, priceMax)
-      .subscribe((data: Page<MenuItem>) => {
-        console.log("Data received:", data);
-        this.menuItems = data.content;
-        this.totalPages = data.page.totalPages;
-        this.currentPage = data.page.number;
-        console.log("number: " + data.page.number);
-        console.log("totalPages: " + data.page.totalPages);
-        console.log("size: " + data.page.size);
-        console.log("totalElements: " + data.page.totalElements);
-      });
+    this.menuService.getMenuItems(this.currentPage, 3, this.filterName, this.filterPriceMin, this.filterPriceMax).subscribe((data: Page<MenuItem>) => {
+      this.menuItems = data.content;
+      this.totalPages = data.page.totalPages;
+      this.currentPage = data.page.number;
+    });
   }
 
   nextPage(): void {
@@ -57,12 +50,27 @@ export class MenuComponent implements OnInit {
   }
 
   applyFilter(): void {
-    this.currentPage = 0;  // Reset to first page
-
-    // Validación para manejar filtros vacíos
-    if (this.filterPriceMin !== null && this.filterPriceMin < 0) this.filterPriceMin = 0;
-    if (this.filterPriceMax !== null && this.filterPriceMax < this.filterPriceMin!) this.filterPriceMax = this.filterPriceMin;
-
+    this.currentPage = 0;
     this.loadMenus();
+  }
+
+  addMenuItem(): void {
+    const newItem: MenuItem = {
+      id: 0,  // El backend generará el ID
+      nombre: 'Nuevo Producto',
+      descripcion: 'Descripción del producto',
+      precio: 0,
+      imagen: '',  // Ruta o URL de la imagen
+      oferta: null
+    };
+    this.menuService.createMenuItem(newItem).subscribe(() => this.loadMenus());
+  }
+
+  editMenuItem(menuItem: MenuItem): void {
+    this.menuService.updateMenuItem(menuItem.id, menuItem).subscribe(() => this.loadMenus());
+  }
+
+  deleteMenuItem(menuItem: MenuItem): void {
+    this.menuService.deleteMenuItem(menuItem.id).subscribe(() => this.loadMenus());
   }
 }

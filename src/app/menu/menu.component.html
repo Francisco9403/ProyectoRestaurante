@@ -8,6 +8,9 @@
 </div>
 <div class="container">
   <h1 class="page-title">Nuestros Productos</h1>
+  @if(authService.isAuthenticated()){
+    <button class="btn btn-secondary" [routerLink]="['/menu/new']">Agregar Producto</button>
+  }
 <!--  <div class="filter-container">-->
 <!--  Esto es si quere poner varios debajo del titulo-->
 <!--    <input type="text" class="form-control" [(ngModel)]="filterName" placeholder="Filtrar por nombre" />-->
@@ -21,11 +24,20 @@
       <h5 class="card-title">{{ menu.nombre }}</h5>
       <p class="card-text">{{ menu.descripcion }}</p>
       <p class="card-text">Precio: {{ menu.precio }}</p>
+
+      @if(authService.isAuthenticated()){
+        <button class="btn btn-secondary" (click)="deleteMenuItem(menu)">Eliminar</button>
+        <button class="btn btn-secondary" [routerLink]="['/menu/edit', menu.id]">Modificar</button>
+      }
+
+
       <!--          <a href="#" class="btn btn-primary">Ver detalles</a>-->
     </div>
   </div>
 }
   </div>
+
+
 </div>
 <div class="pagination-container">
   <button class="btn btn-secondary" (click)="prevPage()" [disabled]="currentPage === 0">Anterior</button>
