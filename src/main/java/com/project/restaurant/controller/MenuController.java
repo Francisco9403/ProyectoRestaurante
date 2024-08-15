@@ -30,9 +30,7 @@ public class MenuController {
                                                    @RequestParam(defaultValue = "1") int size,
                                                    @RequestParam(defaultValue = "") String nombre,
                                                    @RequestParam(defaultValue = "0") Double precioMin,
-                                                   @RequestParam(defaultValue = "10000") Double precioMax) {
-
-        precioMax = Double.MAX_VALUE;
+                                                   @RequestParam(defaultValue = "999999999") Double precioMax) {
 
         Page<Menu> menus = menuService.obtenerTodos(page, size, nombre, precioMin, precioMax);
         return ResponseEntity.ok(menus);
@@ -55,6 +53,26 @@ public class MenuController {
         }
 
         return ResponseEntity.status(HttpStatus.CREATED).body(menuService.CrearMenu(menu));
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<?> editar(@Valid @RequestBody Menu menu, BindingResult result, @PathVariable Long id) {
+        if (result.hasErrors()) {
+            return validar(result);
+        }
+
+        Optional<Menu> o = menuService.obtenerPorId(id);
+        if (o.isPresent()) {
+            Menu menuDb = o.get();
+
+            menuDb.setNombre(menu.getNombre());
+            menuDb.setDescripcion(menu.getDescripcion());
+            menuDb.setPrecio(menu.getPrecio());
+            menuDb.setImagen(menu.getImagen());
+            menuDb.setOfertas(menu.getOfertas());
+            return ResponseEntity.status(HttpStatus.CREATED).body(menuService.CrearMenu(menuDb));
+        }
+        return ResponseEntity.notFound().build();
     }
 
     @DeleteMapping("/{id}")
