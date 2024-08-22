@@ -24,7 +24,7 @@ export interface MenuItem {
   nombre: string;
   descripcion: string;
   precio: number;
-  imagenId: Imagen | null;
+  imagen: Imagen | null;
 }
 
 export interface Oferta {
@@ -67,5 +67,9 @@ export class MenuService {
     formData.append('imagen', imagen);
 
     return this.http.post<MenuItem>(this.apiUrl, formData);
+  }
+
+  deleteMenuItem(id: number): Observable<void> {
+    return this.http.delete<void>(`${this.apiUrl}/${id}`);
   }
 }

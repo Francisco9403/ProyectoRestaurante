@@ -33,6 +33,7 @@ export class MenuComponent implements OnInit {
   getMenus(): void {
     this.menuService.getMenuItems(this.currentPage, this.pageSize, this.nombre, this.precioMin, this.precioMax)
       .subscribe((data: Page<MenuItem>) => {
+        console.log(data); // Verifica la estructura de los datos en la consola
         this.menus = data.content;
         this.totalPages = data.page.totalPages;
       });
@@ -53,5 +54,9 @@ export class MenuComponent implements OnInit {
     this.precioMin = null;
     this.precioMax = null;
     this.onSearch();
+  }
+
+  deleteMenuItem(menuItem: MenuItem): void {
+    this.menuService.deleteMenuItem(menuItem.id).subscribe(() => this.getMenus());
   }
 }
