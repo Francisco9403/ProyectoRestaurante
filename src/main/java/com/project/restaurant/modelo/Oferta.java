@@ -25,9 +25,9 @@ public class Oferta {
     @NotNull(message = "Porcentaje no puede estar vacío")
     private Double porcentajeDescuento;
 
-//    @ManyToOne
-//    @JoinColumn(name = "menu_id")
-//    private Menu menu;
+    @ManyToOne
+    @JoinColumn(name = "menu_id")
+    private Menu menu;
 
     @OneToOne
     @JoinColumn(name = "imagen_id")
@@ -39,7 +39,7 @@ public class Oferta {
         this.nombre = nombre;
         this.descripcion = descripcion;
         this.porcentajeDescuento = porcentajeDescuento;
-//        this.menu = menu;
+        this.menu = menu;
         this.imagen = imagen;
     }
 
@@ -78,13 +78,13 @@ public class Oferta {
         this.porcentajeDescuento = porcentajeDescuento;
     }
 
-//    public Menu getMenu() {
-//        return menu;
-//    }
-//
-//    public void setMenu(Menu menu) {
-//        this.menu = menu;
-//    }
+    public Menu getMenu() {
+        return menu;
+    }
+
+    public void setMenu(Menu menu) {
+        this.menu = menu;
+    }
 
     public Imagen getImagen() {
         return imagen;
