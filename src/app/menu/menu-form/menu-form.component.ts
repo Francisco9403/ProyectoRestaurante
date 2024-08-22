@@ -12,7 +12,7 @@ import {FormsModule} from "@angular/forms";
   styleUrls: ['./menu-form.component.css']
 })
 export class MenuFormComponent {
-  menu: MenuItem = { id: 0, nombre: '', descripcion: '', precio: 0, imagenId: null };
+  menu: MenuItem = { id: 0, nombre: '', descripcion: '', precio: 0, imagen: null };
   selectedFile: File | null = null;
 
   constructor(private menuService: MenuService) {}
