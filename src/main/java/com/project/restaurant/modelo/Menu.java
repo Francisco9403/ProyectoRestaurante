@@ -24,15 +24,15 @@ public class Menu {
     @NotNull(message = "Precio no puede estar vacío")
     private Double precio;
 
-    @NotBlank(message = "Imagen no puede estar vacío")
-    private String imagen;
+    @OneToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "imagen_id")
+    private Imagen imagen;
 
-    @OneToMany(mappedBy = "menu", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "menu", cascade = CascadeType.ALL)
     private List<Oferta> ofertas;
 
     // Constructores, getters, setters, equals, hashCode, toString
-
-    public Menu(Long id, String nombre, String descripcion, Double precio, String imagen, List<Oferta> ofertas) {
+    public Menu(Long id, String nombre, String descripcion, Double precio, Imagen imagen, List<Oferta> ofertas) {
         this.id = id;
         this.nombre = nombre;
         this.descripcion = descripcion;
@@ -76,11 +76,11 @@ public class Menu {
         this.precio = precio;
     }
 
-    public @NotBlank(message = "Imagen no puede estar vacío") String getImagen() {
+    public Imagen getImagen() {
         return imagen;
     }
 
-    public void setImagen(@NotBlank(message = "Imagen no puede estar vacío") String imagen) {
+    public void setImagen(Imagen imagen) {
         this.imagen = imagen;
     }
 
@@ -95,12 +95,9 @@ public class Menu {
     @Override
     public String toString() {
         return "Menu{" +
-                "id=" + id +
-                ", nombre='" + nombre + '\'' +
+                "nombre='" + nombre + '\'' +
                 ", descripcion='" + descripcion + '\'' +
                 ", precio=" + precio +
-                ", imagen='" + imagen + '\'' +
-                ", ofertas=" + ofertas +
                 '}';
     }
 
@@ -109,11 +106,11 @@ public class Menu {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Menu menu = (Menu) o;
-        return Objects.equals(nombre, menu.nombre) && Objects.equals(descripcion, menu.descripcion) && Objects.equals(precio, menu.precio) && Objects.equals(imagen, menu.imagen) && Objects.equals(ofertas, menu.ofertas);
+        return Objects.equals(nombre, menu.nombre) && Objects.equals(descripcion, menu.descripcion) && Objects.equals(precio, menu.precio);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(nombre, descripcion, precio, imagen, ofertas);
+        return Objects.hash(nombre, descripcion, precio);
     }
 }

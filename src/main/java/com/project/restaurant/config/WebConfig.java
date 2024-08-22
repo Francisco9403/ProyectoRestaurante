@@ -11,6 +11,7 @@ public class WebConfig implements WebMvcConfigurer {
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**")
                 .allowedOrigins("http://localhost:4200") // Cambia esto según el puerto de tu aplicación Angular
+                .allowedOrigins("https://localhost:8080")
                 .allowedMethods("*")
                 .allowedHeaders("*");
     }

@@ -4,7 +4,9 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 @Entity
 @Table(name = "oferta")
@@ -23,21 +25,21 @@ public class Oferta {
     @NotNull(message = "Porcentaje no puede estar vacío")
     private Double porcentajeDescuento;
 
-    @ManyToOne
-    @JoinColumn(name = "menu_id")
-    private Menu menu;
+//    @ManyToOne
+//    @JoinColumn(name = "menu_id")
+//    private Menu menu;
 
-    @NotBlank(message = "Imagen no puede estar vacío")
-    private String imagen;
+    @OneToOne
+    @JoinColumn(name = "imagen_id")
+    private Imagen imagen;
 
     // Constructores, getters, setters, equals, hashCode, toString
-
-    public Oferta(Long id, String nombre, String descripcion, Double porcentajeDescuento, Menu menu, String imagen) {
+    public Oferta(Long id, String nombre, String descripcion, Double porcentajeDescuento, Menu menu, Imagen imagen) {
         this.id = id;
         this.nombre = nombre;
         this.descripcion = descripcion;
         this.porcentajeDescuento = porcentajeDescuento;
-        this.menu = menu;
+//        this.menu = menu;
         this.imagen = imagen;
     }
 
@@ -76,32 +78,20 @@ public class Oferta {
         this.porcentajeDescuento = porcentajeDescuento;
     }
 
-    public Menu getMenu() {
-        return menu;
-    }
+//    public Menu getMenu() {
+//        return menu;
+//    }
+//
+//    public void setMenu(Menu menu) {
+//        this.menu = menu;
+//    }
 
-    public void setMenu(Menu menu) {
-        this.menu = menu;
-    }
-
-    public String getImagen() {
+    public Imagen getImagen() {
         return imagen;
     }
 
-    public void setImagen(String imagen) {
+    public void setImagen(Imagen imagen) {
         this.imagen = imagen;
-    }
-
-    @Override
-    public String toString() {
-        return "Oferta{" +
-                "id=" + id +
-                ", nombre='" + nombre + '\'' +
-                ", descripcion='" + descripcion + '\'' +
-                ", porcentajeDescuento=" + porcentajeDescuento +
-                ", menu=" + menu +
-                ", imagen='" + imagen + '\'' +
-                '}';
     }
 
     @Override
@@ -109,11 +99,20 @@ public class Oferta {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Oferta oferta = (Oferta) o;
-        return Objects.equals(nombre, oferta.nombre) && Objects.equals(descripcion, oferta.descripcion) && Objects.equals(porcentajeDescuento, oferta.porcentajeDescuento) && Objects.equals(menu, oferta.menu) && Objects.equals(imagen, oferta.imagen);
+        return Objects.equals(nombre, oferta.nombre) && Objects.equals(descripcion, oferta.descripcion) && Objects.equals(porcentajeDescuento, oferta.porcentajeDescuento);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(nombre, descripcion, porcentajeDescuento, menu, imagen);
+        return Objects.hash(nombre, descripcion, porcentajeDescuento);
+    }
+
+    @Override
+    public String toString() {
+        return "Oferta{" +
+                "nombre='" + nombre + '\'' +
+                ", descripcion='" + descripcion + '\'' +
+                ", porcentajeDescuento=" + porcentajeDescuento +
+                '}';
     }
 }

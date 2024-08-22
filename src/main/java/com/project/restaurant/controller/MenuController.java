@@ -1,28 +1,33 @@
 package com.project.restaurant.controller;
 
+import com.project.restaurant.modelo.Imagen;
 import com.project.restaurant.modelo.Menu;
+import com.project.restaurant.servicio.ImagenService;
 import com.project.restaurant.servicio.MenuService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Optional;
+import java.io.IOException;
+import java.util.*;
 
 @RestController
 @RequestMapping("/api/menus")
 public class MenuController {
 
     private final MenuService menuService;
+    private final ImagenService imagenService;
 
     @Autowired
-    public MenuController(MenuService menuService) {
+    public MenuController(MenuService menuService, ImagenService imagenService) {
         this.menuService = menuService;
+        this.imagenService = imagenService;
     }
 
     @GetMapping
@@ -33,6 +38,7 @@ public class MenuController {
                                                    @RequestParam(defaultValue = "999999999") Double precioMax) {
 
         Page<Menu> menus = menuService.obtenerTodos(page, size, nombre, precioMin, precioMax);
+        System.out.println("Todos los menus: " + menus);
         return ResponseEntity.ok(menus);
     }
 
@@ -46,32 +52,60 @@ public class MenuController {
         }
     }
 
+
     @PostMapping
-    public ResponseEntity<?> crearMenu(@Valid @RequestBody Menu menu, BindingResult result) {
+    public ResponseEntity<?> crearMenu(@Valid @RequestPart("menu") Menu menu,
+                                       @RequestPart("imagen") MultipartFile imagen,
+                                       BindingResult result) {
+
         if (result.hasErrors()) {
             return validar(result);
         }
 
-        return ResponseEntity.status(HttpStatus.CREATED).body(menuService.CrearMenu(menu));
+        Menu nuevoMenu = new Menu();
+
+
+        if (!imagen.isEmpty()) {
+            Imagen imagenParaGuardar = manejarImagen(imagen);
+            nuevoMenu.setImagen(imagenParaGuardar);
+        }
+
+        // Guardar el menú en la base de datos primero
+        nuevoMenu.setNombre(menu.getNombre());
+        nuevoMenu.setDescripcion(menu.getDescripcion());
+        nuevoMenu.setPrecio(menu.getPrecio());
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(menuService.CrearMenu(nuevoMenu));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<?> editar(@Valid @RequestBody Menu menu, BindingResult result, @PathVariable Long id) {
+    public ResponseEntity<?> editar(@Valid @RequestPart("menu") Menu menu,
+                                    @RequestPart(value = "imagenes", required = false) MultipartFile imagen,
+                                    BindingResult result, @PathVariable Long id) {
+
         if (result.hasErrors()) {
             return validar(result);
         }
 
-        Optional<Menu> o = menuService.obtenerPorId(id);
-        if (o.isPresent()) {
-            Menu menuDb = o.get();
+        Optional<Menu> optionalMenu = menuService.obtenerPorId(id);
+        if (optionalMenu.isPresent()) {
+
+            Menu menuDb = optionalMenu.get();
+
+            if (!imagen.isEmpty()) {
+                Imagen imagenParaGuardar = new Imagen();
+
+                manejarImagen(imagen);
+                menuDb.setImagen(imagenParaGuardar);
+            }
 
             menuDb.setNombre(menu.getNombre());
             menuDb.setDescripcion(menu.getDescripcion());
             menuDb.setPrecio(menu.getPrecio());
-            menuDb.setImagen(menu.getImagen());
-            menuDb.setOfertas(menu.getOfertas());
+
             return ResponseEntity.status(HttpStatus.CREATED).body(menuService.CrearMenu(menuDb));
         }
+
         return ResponseEntity.notFound().build();
     }
 
@@ -89,6 +123,19 @@ public class MenuController {
     @GetMapping("/count")
     public ResponseEntity<Long> contarMenu() {
         return ResponseEntity.ok(menuService.contarMenu());
+    }
+
+    // Método auxiliar para manejar la carga de imágenes
+    private Imagen manejarImagen(MultipartFile archivo) {
+        try {
+            Imagen imagen = new Imagen();
+            imagen.setFile(archivo.getBytes());
+            imagen.setFileContentType(archivo.getContentType());
+
+            return imagenService.save(imagen); // Guardar la imagen y retornarla
+        } catch (IOException e) {
+            throw new RuntimeException("Error al subir la imagen", e);
+        }
     }
 
     private ResponseEntity<Map<String, String>> validar(BindingResult result) {

@@ -26,6 +26,7 @@ public class MenuServiceImpl implements MenuService {
     @Transactional(readOnly = true)
     public Page<Menu> obtenerTodos(int page, int size, String nombre, Double precioMin, Double precioMax) {
         Pageable pageable = PageRequest.of(page, size);
+
         return menuRepository.findByNombreContainingAndPrecioBetween(nombre, precioMin, precioMax, pageable);
     }
 

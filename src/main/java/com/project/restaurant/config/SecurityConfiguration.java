@@ -32,6 +32,7 @@ public class SecurityConfiguration {
         requestHandler.setCsrfRequestAttributeName(null);
         http.authorizeHttpRequests(authorize -> authorize
                         .requestMatchers(HttpMethod.GET, "/api/menus/**").permitAll() // Permite el acceso a los endpoints de menú
+                        .requestMatchers(HttpMethod.POST, "/api/menus").permitAll()
                         .requestMatchers(HttpMethod.GET, "assets/*").permitAll()
                         .anyRequest()
                         .authenticated())

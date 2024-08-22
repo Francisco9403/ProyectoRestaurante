@@ -1,7 +1,7 @@
 package com.project.restaurant.servicio;
 
 import com.project.restaurant.modelo.Oferta;
-import com.project.restaurant.repositorio.OfertasRepository;
+import com.project.restaurant.repositorio.OfertaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -11,11 +11,11 @@ import java.util.List;
 @Service
 public class OfertaServiceImpl implements OfertaService{
 
-    private final OfertasRepository ofertasRepository;
+    private final OfertaRepository ofertasRepository;
 
 
     @Autowired
-    public OfertaServiceImpl(OfertasRepository ofertasRepository) {
+    public OfertaServiceImpl(OfertaRepository ofertasRepository) {
         this.ofertasRepository = ofertasRepository;
     }
 
