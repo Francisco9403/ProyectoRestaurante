@@ -14,13 +14,13 @@ public interface ImagenService {
 
     List<Imagen> findAll();
 
-    List<Imagen> findByMenuId(Long menuId);
-
-    List<Imagen> findByOfertaId(Long ofertaId);
+//    List<Imagen> findByMenuId(Long menuId);
+//
+//    List<Imagen> findByOfertaId(Long ofertaId);
 
     void deleteById(Long id);
-
-    void deleteByMenuId(Long menuId);
-
-    void deleteByOfertaId(Long ofertaId);
+//
+//    void deleteByMenuId(Long menuId);
+//
+//    void deleteByOfertaId(Long ofertaId);
 }

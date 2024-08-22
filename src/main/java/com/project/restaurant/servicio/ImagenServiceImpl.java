@@ -36,30 +36,30 @@ public class ImagenServiceImpl implements ImagenService {
         return imagenRepository.findAll();
     }
 
-    @Override
-    @Transactional(readOnly = true)
-    public List<Imagen> findByMenuId(Long menuId) {
-        return imagenRepository.findByMenuId(menuId);
-    }
-
-    @Override
-    @Transactional(readOnly = true)
-    public List<Imagen> findByOfertaId(Long ofertaId) {
-        return imagenRepository.findByOfertaId(ofertaId);
-    }
+//    @Override
+//    @Transactional(readOnly = true)
+//    public List<Imagen> findByMenuId(Long menuId) {
+//        return imagenRepository.findByMenuId(menuId);
+//    }
+//
+//    @Override
+//    @Transactional(readOnly = true)
+//    public List<Imagen> findByOfertaId(Long ofertaId) {
+//        return imagenRepository.findByOfertaId(ofertaId);
+//    }
 
     @Override
     public void deleteById(Long id) {
         imagenRepository.deleteById(id);
     }
 
-    @Override
-    public void deleteByMenuId(Long menuId) {
-        imagenRepository.deleteByMenuId(menuId);
-    }
-
-    @Override
-    public void deleteByOfertaId(Long ofertaId) {
-        imagenRepository.deleteByOfertaId(ofertaId);
-    }
+//    @Override
+//    public void deleteByMenuId(Long menuId) {
+//        imagenRepository.deleteByMenuId(menuId);
+//    }
+//
+//    @Override
+//    public void deleteByOfertaId(Long ofertaId) {
+//        imagenRepository.deleteByOfertaId(ofertaId);
+//    }
 }

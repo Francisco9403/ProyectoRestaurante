@@ -1,5 +1,6 @@
 package com.project.restaurant.modelo;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.util.Arrays;
@@ -14,11 +15,11 @@ public class Imagen  {
     @Column(name = "id")
     private Long id;
 
-    @OneToOne(mappedBy = "imagen", cascade = CascadeType.REMOVE)
-    private Menu menu;
-
-    @OneToOne(mappedBy = "imagen", cascade = CascadeType.REMOVE)
-    private Oferta oferta;
+//    @OneToOne(mappedBy = "imagen", cascade = CascadeType.REMOVE)
+//    private Menu menu;
+//
+//    @OneToOne(mappedBy = "imagen", cascade = CascadeType.REMOVE)
+//    private Oferta oferta;
 
     @Lob
     @Column(name = "file", nullable = false)
@@ -38,21 +39,21 @@ public class Imagen  {
         this.id = id;
     }
 
-    public Menu getMenu() {
-        return menu;
-    }
-
-    public void setMenu(Menu menu) {
-        this.menu = menu;
-    }
-
-    public Oferta getOferta() {
-        return oferta;
-    }
-
-    public void setOferta(Oferta oferta) {
-        this.oferta = oferta;
-    }
+//    public Menu getMenu() {
+//        return menu;
+//    }
+//
+//    public void setMenu(Menu menu) {
+//        this.menu = menu;
+//    }
+//
+//    public Oferta getOferta() {
+//        return oferta;
+//    }
+//
+//    public void setOferta(Oferta oferta) {
+//        this.oferta = oferta;
+//    }
 
     public byte[] getFile() {
         return file;

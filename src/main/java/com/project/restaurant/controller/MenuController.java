@@ -1,5 +1,6 @@
 package com.project.restaurant.controller;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.project.restaurant.modelo.Imagen;
 import com.project.restaurant.modelo.Menu;
 import com.project.restaurant.servicio.ImagenService;
@@ -38,7 +39,17 @@ public class MenuController {
                                                    @RequestParam(defaultValue = "999999999") Double precioMax) {
 
         Page<Menu> menus = menuService.obtenerTodos(page, size, nombre, precioMin, precioMax);
-        System.out.println("Todos los menus: " + menus);
+        try {
+            // Convertir el objeto Page<Menu> a JSON para inspección
+            ObjectMapper objectMapper = new ObjectMapper();
+            String jsonResponse = objectMapper.writeValueAsString(menus);
+
+            // Imprimir la respuesta JSON en la consola
+            System.out.println("Todos los menus (JSON): " + jsonResponse);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
         return ResponseEntity.ok(menus);
     }
 
