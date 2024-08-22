@@ -1,76 +1,57 @@
 import {Component, inject, OnInit} from '@angular/core';
-import { MenuItem, MenuService, Page } from "./menu.service";
-import { FormsModule } from "@angular/forms";
-import { AuthService } from "../auth/auth.service";
+import { MenuService, MenuItem, Page } from './menu.service';
+import {AuthService} from "../auth/auth.service";
+import {FormsModule} from "@angular/forms";
 import {RouterLink} from "@angular/router";
 
 @Component({
   selector: 'app-menu',
   templateUrl: './menu.component.html',
   standalone: true,
-  imports: [FormsModule, RouterLink],
+  imports: [
+    FormsModule,
+    RouterLink
+  ],
   styleUrls: ['./menu.component.css']
 })
 export class MenuComponent implements OnInit {
-
-  menuItems: MenuItem[] = [];
+  menus: MenuItem[] = [];
+  nombre: string = '';
+  precioMin: number | null = null;
+  precioMax: number | null = null;
   currentPage: number = 0;
+  pageSize: number = 10;
   totalPages: number = 0;
-  filterName: string = '';
-  filterPriceMin: number = 0;
-  filterPriceMax: number = 100;
   authService = inject(AuthService);
 
-  constructor(private menuService: MenuService) { }
+  constructor(private menuService: MenuService) {}
 
   ngOnInit(): void {
-    this.loadMenus();
+    this.getMenus();
   }
 
-  loadMenus(): void {
-    this.menuService.getMenuItems(this.currentPage, 3, this.filterName, this.filterPriceMin, this.filterPriceMax).subscribe((data: Page<MenuItem>) => {
-      this.menuItems = data.content;
-      this.totalPages = data.page.totalPages;
-      this.currentPage = data.page.number;
-    });
+  getMenus(): void {
+    this.menuService.getMenuItems(this.currentPage, this.pageSize, this.nombre, this.precioMin, this.precioMax)
+      .subscribe((data: Page<MenuItem>) => {
+        this.menus = data.content;
+        this.totalPages = data.page.totalPages;
+      });
   }
 
-  nextPage(): void {
-    if (this.currentPage < this.totalPages - 1) {
-      this.currentPage++;
-      this.loadMenus();
-    }
-  }
-
-  prevPage(): void {
-    if (this.currentPage > 0) {
-      this.currentPage--;
-      this.loadMenus();
-    }
-  }
-
-  applyFilter(): void {
+  onSearch(): void {
     this.currentPage = 0;
-    this.loadMenus();
+    this.getMenus();
   }
 
-  addMenuItem(): void {
-    const newItem: MenuItem = {
-      id: 0,  // El backend generará el ID
-      nombre: 'Nuevo Producto',
-      descripcion: 'Descripción del producto',
-      precio: 0,
-      imagen: '',  // Ruta o URL de la imagen
-      oferta: null
-    };
-    this.menuService.createMenuItem(newItem).subscribe(() => this.loadMenus());
+  onPageChange(page: number): void {
+    this.currentPage = page;
+    this.getMenus();
   }
 
-  editMenuItem(menuItem: MenuItem): void {
-    this.menuService.updateMenuItem(menuItem.id, menuItem).subscribe(() => this.loadMenus());
-  }
-
-  deleteMenuItem(menuItem: MenuItem): void {
-    this.menuService.deleteMenuItem(menuItem.id).subscribe(() => this.loadMenus());
+  clearFilters(): void {
+    this.nombre = '';
+    this.precioMin = null;
+    this.precioMax = null;
+    this.onSearch();
   }
 }

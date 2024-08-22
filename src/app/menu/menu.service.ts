@@ -1,7 +1,13 @@
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { environment } from "../environments/environment";
 import { map, Observable } from "rxjs";
 import { Injectable } from "@angular/core";
+
+export interface Imagen {
+  id: number;
+  file: string; // Assuming base64 encoded string for the image
+  fileContentType: string;
+}
 
 export interface Page<T> {
   content: T[];
@@ -18,8 +24,7 @@ export interface MenuItem {
   nombre: string;
   descripcion: string;
   precio: number;
-  imagen: string;
-  oferta: Oferta | null;
+  imagenId: Imagen | null;
 }
 
 export interface Oferta {
@@ -27,7 +32,8 @@ export interface Oferta {
   nombre: string;
   descripcion: string;
   porcentajeDescuento: number;
-  menus: MenuItem[];
+  menuId: MenuItem;
+  imagenId: Imagen | null;
 }
 
 @Injectable({
@@ -55,20 +61,11 @@ export class MenuService {
     return this.http.get<Page<MenuItem>>(this.apiUrl, { params });
   }
 
-  createMenuItem(menuItem: MenuItem): Observable<MenuItem> {
-    return this.http.post<MenuItem>(this.apiUrl, menuItem);
-  }
+  crearMenu(menu: MenuItem, imagen: File): Observable<MenuItem> {
+    const formData: FormData = new FormData();
+    formData.append('menu', new Blob([JSON.stringify(menu)], { type: 'application/json' }));
+    formData.append('imagen', imagen);
 
-  updateMenuItem(id: number, menuItem: MenuItem): Observable<MenuItem> {
-    return this.http.put<MenuItem>(`${this.apiUrl}/${id}`, menuItem);
+    return this.http.post<MenuItem>(this.apiUrl, formData);
   }
-
-  deleteMenuItem(id: number): Observable<void> {
-    return this.http.delete<void>(`${this.apiUrl}/${id}`);
-  }
-
-  getMenuItemById(id: number): Observable<MenuItem> {
-    return this.http.get<MenuItem>(`${this.apiUrl}/${id}`);
-  }
-
 }
