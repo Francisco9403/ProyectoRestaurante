@@ -24,7 +24,7 @@ export interface MenuItem {
   nombre: string;
   descripcion: string;
   precio: number;
-  imagen: Imagen | null;
+  imagenId: Imagen | null;
 }
 
 export interface Oferta {
@@ -61,32 +61,11 @@ export class MenuService {
     return this.http.get<Page<MenuItem>>(this.apiUrl, { params });
   }
 
-  getMenuItemById(id: number): Observable<MenuItem> {
-    return this.http.get<MenuItem>(`${this.apiUrl}/${id}`);
-  }
-
-  updateMenu(menu: MenuItem, imagen: File | null): Observable<MenuItem> {
-    const formData: FormData = new FormData();
-    formData.append('menu', new Blob([JSON.stringify(menu)], { type: 'application/json' }));
-
-    if (imagen) {
-      formData.append('imagen', imagen);
-    }
-
-    return this.http.put<MenuItem>(`${this.apiUrl}/${menu.id}`, formData);
-  }
-
-  // Crear un nuevo menú
   crearMenu(menu: MenuItem, imagen: File): Observable<MenuItem> {
     const formData: FormData = new FormData();
     formData.append('menu', new Blob([JSON.stringify(menu)], { type: 'application/json' }));
     formData.append('imagen', imagen);
 
     return this.http.post<MenuItem>(this.apiUrl, formData);
-  }
-
-  // Eliminar un menú por su ID
-  deleteMenuItem(id: number): Observable<void> {
-    return this.http.delete<void>(`${this.apiUrl}/${id}`);
   }
 }
