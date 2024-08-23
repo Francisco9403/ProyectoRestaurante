@@ -91,7 +91,7 @@ public class MenuController {
 
     @PutMapping("/{id}")
     public ResponseEntity<?> editar(@Valid @RequestPart("menu") Menu menu,
-                                    @RequestPart(value = "imagenes", required = false) MultipartFile imagen,
+                                    @RequestPart(value = "imagen", required = false) MultipartFile imagen,
                                     BindingResult result, @PathVariable Long id) {
 
         if (result.hasErrors()) {
@@ -100,25 +100,27 @@ public class MenuController {
 
         Optional<Menu> optionalMenu = menuService.obtenerPorId(id);
         if (optionalMenu.isPresent()) {
-
             Menu menuDb = optionalMenu.get();
 
-            if (!imagen.isEmpty()) {
-                Imagen imagenParaGuardar = new Imagen();
-
-                manejarImagen(imagen);
+            // Solo reemplaza la imagen si se ha enviado una nueva
+            if (imagen != null && !imagen.isEmpty()) {
+                Imagen imagenParaGuardar = manejarImagen(imagen);
                 menuDb.setImagen(imagenParaGuardar);
             }
 
+            // Actualiza los campos del menú
             menuDb.setNombre(menu.getNombre());
             menuDb.setDescripcion(menu.getDescripcion());
             menuDb.setPrecio(menu.getPrecio());
 
-            return ResponseEntity.status(HttpStatus.CREATED).body(menuService.CrearMenu(menuDb));
+            // Guarda el menú actualizado en la base de datos
+            menuService.CrearMenu(menuDb);
+            return ResponseEntity.status(HttpStatus.CREATED).body(menuDb);
         }
 
         return ResponseEntity.notFound().build();
     }
+
 
     @DeleteMapping("/{id}")
     public ResponseEntity<?> eliminarMenu(@PathVariable Long id) {
