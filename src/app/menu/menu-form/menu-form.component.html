@@ -13,7 +13,7 @@
   </div>
   <div>
     <label for="imagen">Imagen:</label>
-    <input type="file" id="imagen" (change)="onFileSelected($event)" name="imagen" required />
+    <input type="file" id="imagen" (change)="onFileSelected($event)" name="imagen" [required]="!isEditMode" />
   </div>
-  <button type="submit">Crear Menú</button>
+  <button type="submit">{{ isEditMode ? 'Actualizar' : 'Crear' }} Menú</button>
 </form>
