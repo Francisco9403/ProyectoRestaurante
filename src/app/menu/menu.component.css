@@ -8,11 +8,11 @@
   margin-bottom: 30px;
 }
 
+/* Contenedor de filtros */
 .filter-container {
   display: flex;
-  justify-content: center;
-  align-items: center; /* Alinea verticalmente */
-  gap: 20px; /* Ajusta el espacio entre los elementos */
+  flex-wrap: wrap; /* Permite que los elementos se envuelvan en pantallas más pequeñas */
+  gap: 15px; /* Espacio entre los elementos */
   margin-bottom: 20px;
   background-color: #f8f9fa; /* Fondo del contenedor de filtros */
   padding: 15px;
@@ -20,21 +20,62 @@
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra */
 }
 
+/* Estilo de los campos de entrada */
 .filter-container .form-control {
-  padding: 5px 10px;
+  padding: 10px;
   font-size: 1rem;
+  border: 1px solid #ced4da;
+  border-radius: 4px;
+  flex: 1; /* Permite que los campos se ajusten en el espacio disponible */
+  min-width: 200px; /* Ancho mínimo para mantener la consistencia */
 }
 
+/* Estilo de los botones de filtro */
 .filter-container .btn-secondary {
   background-color: #6c757d;
   border: none;
-  padding: 5px 15px;
+  padding: 10px 20px;
   font-size: 1rem;
   text-transform: uppercase;
+  color: #fff;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  flex: 1; /* Permite que los botones se ajusten en el espacio disponible */
+  min-width: 150px; /* Ancho mínimo para los botones */
 }
 
 .filter-container .btn-secondary:hover {
   background-color: #5a6268;
+}
+
+/* Media Queries para Responsividad */
+
+/* En pantallas pequeñas (móviles) */
+@media (max-width: 768px) {
+  .filter-container {
+    flex-direction: column; /* Apila los elementos verticalmente */
+    gap: 10px; /* Ajusta el espacio entre los elementos */
+  }
+
+  .filter-container .form-control,
+  .filter-container .btn-secondary {
+    width: 100%; /* Los campos de entrada y botones ocupan todo el ancho disponible */
+  }
+}
+
+/* En pantallas medianas (tablets) */
+@media (min-width: 769px) and (max-width: 1024px) {
+  .filter-container {
+    flex-direction: row;
+    justify-content: center; /* Centra los elementos en la fila */
+  }
+
+  .filter-container .form-control,
+  .filter-container .btn-secondary {
+    flex: 1; /* Ajusta el tamaño de los campos de entrada y botones en la fila */
+    margin: 5px; /* Añade espacio entre los elementos */
+  }
 }
 
 .card-container {
@@ -137,4 +178,47 @@
 
 .price-slider-container input[type="range"] {
   width: 100px; /* Ajusta el ancho del slider */
+}
+.card-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px; /* Espacio entre las tarjetas */
+}
+
+.card {
+  width: 18rem;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.card img {
+  width: 100%;
+  height: 200px; /* Altura fija para las imágenes */
+  object-fit: cover; /* Asegura que la imagen se ajuste dentro del contenedor sin distorsionarse */
+}
+
+.card-body {
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.card-title {
+  font-size: 1.25rem;
+  margin-bottom: 8px;
+}
+
+.card-text {
+  margin-bottom: 8px;
+}
+
+.card-body button {
+  margin-right: 8px;
+}
+.boton {
+  padding-top: 10px;  /* Aumenta este valor según necesites */
+  padding-bottom: 20px;  /* Aumenta este valor según necesites */
 }

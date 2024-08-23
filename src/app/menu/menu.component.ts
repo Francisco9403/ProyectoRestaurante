@@ -20,7 +20,7 @@ export class MenuComponent implements OnInit {
   precioMin: number | null = null;
   precioMax: number | null = null;
   currentPage: number = 0;
-  pageSize: number = 10;
+  pageSize: number = 3;
   totalPages: number = 0;
   authService = inject(AuthService);
 

@@ -61,11 +61,6 @@ export class NavbarComponent implements OnInit {
     if (this.authService.isAuthenticated()) {
       return [
         {
-          label: "My properties",
-          routerLink: "landlord/properties",
-          visible: this.hasToBeLandlord(),
-        },
-        {
           label: "Log out",
           command: this.logout
         }

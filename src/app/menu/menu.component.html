@@ -2,16 +2,18 @@
   <input type="text" class="form-control" [(ngModel)]="nombre" placeholder="Filtrar por nombre" />
   <input type="number" class="form-control" [(ngModel)]="precioMin" placeholder="Precio mínimo" />
   <input type="number" class="form-control" [(ngModel)]="precioMax" placeholder="Precio máximo" />
-  <button (click)="onSearch()">Buscar</button>
-  <button (click)="clearFilters()">Limpiar Filtros</button>
+  <button class="btn btn-secondary" (click)="onSearch()">Buscar</button>
+  <button class="btn btn-secondary" (click)="clearFilters()">Limpiar Filtros</button>
 </div>
+
 
 <div class="container">
   <h1 class="page-title">Nuestros Productos</h1>
   @if (authService.isAuthenticated()) {
-    <div>
-      <button class="btn btn-secondary" [routerLink]="['/menu/new']">Agregar Producto</button>
+    <div class="boton">
+      <button class="btn btn-secondary btn-padding" [routerLink]="['/menu/new']">Agregar Producto</button>
     </div>
+
   }
 
   <div class="card-container">
