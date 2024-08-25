@@ -5,6 +5,7 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
@@ -25,21 +26,20 @@ public class Oferta {
     @NotNull(message = "Porcentaje no puede estar vacío")
     private Double porcentajeDescuento;
 
-    @ManyToOne
-    @JoinColumn(name = "menu_id")
-    private Menu menu;
+//    @OneToMany(mappedBy = "oferta", cascade = CascadeType.ALL)
+//    private List<Menu> menus;
 
-    @OneToOne
+    @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "imagen_id")
     private Imagen imagen;
 
     // Constructores, getters, setters, equals, hashCode, toString
-    public Oferta(Long id, String nombre, String descripcion, Double porcentajeDescuento, Menu menu, Imagen imagen) {
+    public Oferta(Long id, String nombre, String descripcion, Double porcentajeDescuento, Imagen imagen) {
         this.id = id;
         this.nombre = nombre;
         this.descripcion = descripcion;
         this.porcentajeDescuento = porcentajeDescuento;
-        this.menu = menu;
+//        this.menus = menus;
         this.imagen = imagen;
     }
 
@@ -78,13 +78,13 @@ public class Oferta {
         this.porcentajeDescuento = porcentajeDescuento;
     }
 
-    public Menu getMenu() {
-        return menu;
-    }
-
-    public void setMenu(Menu menu) {
-        this.menu = menu;
-    }
+//    public List<Menu> getMenus() {
+//        return menus;
+//    }
+//
+//    public void setMenus(List<Menu> menus) {
+//        this.menus = menus;
+//    }
 
     public Imagen getImagen() {
         return imagen;

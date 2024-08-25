@@ -28,8 +28,9 @@ public class Menu {
     @JoinColumn(name = "imagen_id")
     private Imagen imagen;
 
-//    @OneToMany(mappedBy = "menu", cascade = CascadeType.ALL)
-//    private List<Oferta> ofertas;
+    @ManyToOne
+    @JoinColumn(name = "oferta_id")
+    private Oferta oferta;
 
     // Constructores, getters, setters, equals, hashCode, toString
     public Menu(Long id, String nombre, String descripcion, Double precio, Imagen imagen) {
@@ -83,13 +84,13 @@ public class Menu {
         this.imagen = imagen;
     }
 
-//    public List<Oferta> getOfertas() {
-//        return ofertas;
-//    }
-//
-//    public void setOfertas(List<Oferta> ofertas) {
-//        this.ofertas = ofertas;
-//    }
+    public Oferta getOferta() {
+        return oferta;
+    }
+
+    public void setOferta(Oferta oferta) {
+        this.oferta = oferta;
+    }
 
     @Override
     public String toString() {

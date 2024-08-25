@@ -1,15 +1,17 @@
 package com.project.restaurant.controller;
 
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.project.restaurant.modelo.Imagen;
 import com.project.restaurant.modelo.Menu;
+import com.project.restaurant.modelo.Oferta;
 import com.project.restaurant.servicio.ImagenService;
 import com.project.restaurant.servicio.MenuService;
+import com.project.restaurant.servicio.OfertaService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
@@ -24,11 +26,13 @@ public class MenuController {
 
     private final MenuService menuService;
     private final ImagenService imagenService;
+    private final OfertaService ofertaService;
 
     @Autowired
-    public MenuController(MenuService menuService, ImagenService imagenService) {
+    public MenuController(MenuService menuService, ImagenService imagenService, OfertaService ofertaService) {
         this.menuService = menuService;
         this.imagenService = imagenService;
+        this.ofertaService = ofertaService;
     }
 
     @GetMapping
@@ -150,6 +154,39 @@ public class MenuController {
             throw new RuntimeException("Error al subir la imagen", e);
         }
     }
+
+    @PostMapping("/nuevaOferta")
+    public ResponseEntity<Oferta> createOffer(
+            @RequestPart("ofertaJson") String ofertaJson,
+            @RequestPart(value = "imagen") MultipartFile imagenFile,
+            @RequestPart(value = "menuIds") String menuIdsJson) throws IOException {
+
+        // Convertir ofertaJson a un objeto Oferta
+        Oferta oferta = new ObjectMapper().readValue(ofertaJson, Oferta.class);
+
+        // Manejar la imagen si está presente
+        if (imagenFile != null && !imagenFile.isEmpty()) {
+            Imagen imagen = manejarImagen(imagenFile);
+            oferta.setImagen(imagen);
+        }
+
+        Oferta ofertaCreada = ofertaService.CrearOferta(oferta);
+
+        // Convertir el JSON de menuIds a una lista de IDs
+        List<Long> menuIds = new ObjectMapper().readValue(menuIdsJson, new TypeReference<List<Long>>() {});
+
+        if (!menuIds.isEmpty()) {
+            for (Long menuId : menuIds) {
+                Optional<Menu> menu = menuService.obtenerPorId(menuId);
+                menu.get().setOferta(ofertaCreada);
+                menuService.CrearMenu(menu.orElse(null));
+            }
+        }
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(ofertaCreada);
+    }
+
+
 
     private ResponseEntity<Map<String, String>> validar(BindingResult result) {
         Map<String, String> errores = new HashMap<>();
