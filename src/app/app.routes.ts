@@ -3,6 +3,7 @@ import { HomeComponent } from "./home/home.component";
 import { authorityRouteAccess } from "./auth/authority-route-access";
 import {MenuComponent} from "./menu/menu.component";
 import {MenuFormComponent} from "./menu/menu-form/menu-form.component";
+import {OfertaFormComponent} from "./oferta-form/oferta-form.component";
 
 // Definición de las rutas de la aplicación
 export const routes: Routes = [
@@ -21,5 +22,8 @@ export const routes: Routes = [
   {
     path: 'menu/edit/:id',
     component: MenuFormComponent
+  },
+  { path: 'oferta/new',
+    component: OfertaFormComponent
   }
 ];

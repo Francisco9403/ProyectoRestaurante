@@ -12,8 +12,8 @@
   @if (authService.isAuthenticated()) {
     <div class="boton">
       <button class="btn btn-secondary btn-padding" [routerLink]="['/menu/new']">Agregar Producto</button>
+      <button class="btn btn-secondary btn-padding" [routerLink]="['/oferta/new']">Agregar Oferta</button>
     </div>
-
   }
 
   <div class="card-container">
@@ -25,15 +25,23 @@
         <div class="card-body" style="overflow:hidden">
           <h5 class="card-title">{{ menu.nombre }}</h5>
           <p class="card-text">{{ menu.descripcion }}</p>
-          <p class="card-text">Precio: {{ menu.precio }}</p>
-
+          <p class="card-text">
+          @if (menu.oferta) {
+            <span>
+            <span class="precio-original">{{ menu.precio }}</span><br>
+            <span class="precio-descuento">{{ getPrecioConDescuento(menu) }}</span>
+          </span>
+          } @else {
+            <span>{{ menu.precio }}</span>
+            }
+          </p>
           @if (authService.isAuthenticated()) {
             <div>
               <button class="btn btn-secondary" (click)="deleteMenuItem(menu)">Eliminar</button>
               <button class="btn btn-secondary" [routerLink]="['/menu/edit', menu.id]">Modificar</button>
             </div>
           }
-        </div>
+          </div>
       </div>
     }
   </div>

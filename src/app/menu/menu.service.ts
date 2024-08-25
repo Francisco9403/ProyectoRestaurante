@@ -25,6 +25,7 @@ export interface MenuItem {
   descripcion: string;
   precio: number;
   imagen: Imagen | null;
+  oferta?: Oferta | null;
 }
 
 export interface Oferta {
@@ -32,7 +33,7 @@ export interface Oferta {
   nombre: string;
   descripcion: string;
   porcentajeDescuento: number;
-  menuId: MenuItem;
+  menu: MenuItem[]  | null;
   imagenId: Imagen | null;
 }
 
@@ -88,5 +89,21 @@ export class MenuService {
   // Eliminar un menú por su ID
   deleteMenuItem(id: number): Observable<void> {
     return this.http.delete<void>(`${this.apiUrl}/${id}`);
+  }
+
+
+
+
+  createOffer(formData: FormData): Observable<Oferta> {
+    return this.http.post<Oferta>(`${this.apiUrl}/nuevaOferta`, formData);
+  }
+
+  // Método para calcular el precio con descuento de un menú
+  calcularPrecioConDescuento(menu: MenuItem): number {
+    if (menu.oferta && menu.oferta.porcentajeDescuento > 0) {
+      const descuento = menu.precio * (menu.oferta.porcentajeDescuento / 100);
+      return menu.precio - descuento;
+    }
+    return menu.precio;
   }
 }

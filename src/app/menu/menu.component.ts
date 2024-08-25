@@ -59,4 +59,9 @@ export class MenuComponent implements OnInit {
   deleteMenuItem(menuItem: MenuItem): void {
     this.menuService.deleteMenuItem(menuItem.id).subscribe(() => this.getMenus());
   }
+
+  // Método para obtener el precio con descuento
+  getPrecioConDescuento(menu: MenuItem): number {
+    return this.menuService.calcularPrecioConDescuento(menu);
+  }
 }
