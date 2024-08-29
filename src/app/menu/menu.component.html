@@ -13,6 +13,8 @@
     <div class="boton">
       <button class="btn btn-secondary btn-padding" [routerLink]="['/menu/new']">Agregar Producto</button>
       <button class="btn btn-secondary btn-padding" [routerLink]="['/oferta/new']">Agregar Oferta</button>
+      <button class="btn btn-secondary btn-padding" [routerLink]="['/ofertas']">Ver Ofertas</button>
+
     </div>
   }
 
@@ -28,8 +30,8 @@
           <p class="card-text">
           @if (menu.oferta) {
             <span>
-            <span class="precio-original">{{ menu.precio }}</span><br>
-            <span class="precio-descuento">{{ getPrecioConDescuento(menu) }}</span>
+            <span class="precio-original">Precio Original: {{ menu.precio }}</span><br>
+            <span class="precio-descuento">Precio Con Descuento efectivo: {{ getPrecioConDescuento(menu) }}</span>
           </span>
           } @else {
             <span>{{ menu.precio }}</span>

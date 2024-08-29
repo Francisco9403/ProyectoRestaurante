@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
-import {FormsModule} from "@angular/forms";
-import {MenuItem, MenuService, Oferta, Page} from "../menu/menu.service";
+import { Router } from '@angular/router';
+import { FormsModule } from "@angular/forms";
+import { MenuItem, MenuService, Oferta, Page } from "../../menu/menu.service";
 
 @Component({
   selector: 'app-oferta-form',
@@ -22,7 +23,7 @@ export class OfertaFormComponent {
   pageSize: number = 3;
   totalPages: number = 0;
 
-  constructor(private menuService: MenuService) {}
+  constructor(private menuService: MenuService, private router: Router) {}
 
   ngOnInit(): void {
     this.getMenus();
@@ -90,6 +91,7 @@ export class OfertaFormComponent {
       this.menuService.createOffer(formData).subscribe(() => {
         alert('Oferta creada exitosamente');
         this.clearForm();
+        this.router.navigate(['/menu']);  // Redirige a la lista de menús
       });
     }
   }
@@ -105,5 +107,4 @@ export class OfertaFormComponent {
   trackByMenuId(index: number, menu: MenuItem): string {
     return `${index}-${menu.id}`;
   }
-
 }
