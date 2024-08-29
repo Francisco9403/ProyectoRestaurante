@@ -1,8 +1,11 @@
 package com.project.restaurant.controller;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.project.restaurant.modelo.Menu;
 import com.project.restaurant.servicio.OfertaService;
 import com.project.restaurant.modelo.Oferta;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -20,11 +23,26 @@ public class OfertaController {
         this.ofertaService = ofertaService;
     }
 
-    // Obtener todos los menús
     @GetMapping
-    public ResponseEntity<List<Oferta>> obtenerTodos() {
-        List<Oferta> ofertas = ofertaService.obtenerTodos();
-        return new ResponseEntity<>(ofertas, HttpStatus.OK);
+    public ResponseEntity<Page<Oferta>> obtenerMenus(@RequestParam(defaultValue = "0") int page,
+                                                   @RequestParam(defaultValue = "1") int size,
+                                                   @RequestParam(defaultValue = "") String nombre,
+                                                   @RequestParam(defaultValue = "0") Double descuentoMin,
+                                                   @RequestParam(defaultValue = "999999999") Double descuentoMax) {
+
+        Page<Oferta> ofertas = ofertaService.obtenerTodos(page, size, nombre, descuentoMin, descuentoMax);
+        try {
+            // Convertir el objeto Page<Menu> a JSON para inspección
+            ObjectMapper objectMapper = new ObjectMapper();
+            String jsonResponse = objectMapper.writeValueAsString(ofertas);
+
+            // Imprimir la respuesta JSON en la consola
+            System.out.println("Todos las ofertas (JSON): " + jsonResponse);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return ResponseEntity.ok(ofertas);
     }
 
     // Obtener un menú por su ID

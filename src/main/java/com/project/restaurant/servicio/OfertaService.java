@@ -2,12 +2,13 @@ package com.project.restaurant.servicio;
 
 
 import com.project.restaurant.modelo.Oferta;
+import org.springframework.data.domain.Page;
 
 import java.util.List;
 
 public interface OfertaService {
 
-    List<Oferta> obtenerTodos();
+    Page<Oferta> obtenerTodos(int page, int size, String nombre, Double descuentoMin, Double descuentoMax);
 
     Oferta obtenerPorId(Long id);
 
