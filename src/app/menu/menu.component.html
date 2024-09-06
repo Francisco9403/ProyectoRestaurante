@@ -34,7 +34,7 @@
             <span class="precio-descuento">Precio Con Descuento efectivo: {{ getPrecioConDescuento(menu) }}</span>
           </span>
           } @else {
-            <span>{{ menu.precio }}</span>
+            <span>Precio: {{ menu.precio }}</span>
             }
           </p>
           @if (authService.isAuthenticated()) {
