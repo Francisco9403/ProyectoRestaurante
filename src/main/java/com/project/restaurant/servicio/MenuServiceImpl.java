@@ -10,6 +10,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -59,4 +60,18 @@ public class MenuServiceImpl implements MenuService {
     public long contarMenu() {
         return menuRepository.count();
     }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<Menu> obtenerMenusPorOferta(Long id) {
+        List<Menu> menus = menuRepository.findAll();
+        List<Menu> aRetornar = new ArrayList<Menu>();
+        for(Menu menu : menus) {
+            if (menu.getOferta() != null && menu.getOferta().getId().equals(id)) {
+                aRetornar.add(menu);
+            }
+        }
+        return aRetornar;
+    }
+
 }

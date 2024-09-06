@@ -26,7 +26,8 @@ public class Oferta {
     @NotNull(message = "Porcentaje no puede estar vacío")
     private Double porcentajeDescuento;
 
-//    @OneToMany(mappedBy = "oferta", cascade = CascadeType.ALL)
+//    @OneToMany(cascade = CascadeType.ALL)
+//    @JoinColumn(name = "oferta_id")  // Asegúrate de que la columna existe en la tabla
 //    private List<Menu> menus;
 
     @OneToOne(fetch = FetchType.EAGER)
@@ -39,7 +40,6 @@ public class Oferta {
         this.nombre = nombre;
         this.descripcion = descripcion;
         this.porcentajeDescuento = porcentajeDescuento;
-//        this.menus = menus;
         this.imagen = imagen;
     }
 

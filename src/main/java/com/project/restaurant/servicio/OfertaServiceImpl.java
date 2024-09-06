@@ -1,5 +1,6 @@
 package com.project.restaurant.servicio;
 
+import com.project.restaurant.modelo.Menu;
 import com.project.restaurant.modelo.Oferta;
 import com.project.restaurant.repositorio.OfertaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,16 +25,22 @@ public class OfertaServiceImpl implements OfertaService{
 
     @Override
     @Transactional(readOnly = true)
-    public Page<Oferta> obtenerTodos(int page, int size, String nombre, Double descuentoMin, Double descuentoMax) {
+    public Page<Oferta> obtenerTodos(int page, int size, String nombre, Double precioMin, Double precioMax) {
         Pageable pageable = PageRequest.of(page, size);
 
-        return ofertasRepository.findByNombreContainingAndPorcentajeDescuentoBetween(nombre, descuentoMin, descuentoMax, pageable);
+        return ofertasRepository.findByNombreContainingAndPorcentajeDescuentoBetween(nombre, precioMin, precioMax, pageable);
     }
 
     @Override
     @Transactional(readOnly = true)
     public Oferta obtenerPorId(Long id) {
         return ofertasRepository.findById(id).orElse(null);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public Oferta obtenerPorNombre(String nombre) {
+        return ofertasRepository.findByNombre(nombre);
     }
 
     @Override

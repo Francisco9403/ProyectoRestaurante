@@ -162,24 +162,46 @@ public class MenuController {
             @RequestPart(value = "menuIds") String menuIdsJson) throws IOException {
 
         // Convertir ofertaJson a un objeto Oferta
-        Oferta oferta = new ObjectMapper().readValue(ofertaJson, Oferta.class);
-
-        // Manejar la imagen si está presente
-        if (imagenFile != null && !imagenFile.isEmpty()) {
-            Imagen imagen = manejarImagen(imagenFile);
-            oferta.setImagen(imagen);
-        }
-
-        Oferta ofertaCreada = ofertaService.CrearOferta(oferta);
+        Oferta nuevaOferta = new ObjectMapper().readValue(ofertaJson, Oferta.class);
 
         // Convertir el JSON de menuIds a una lista de IDs
         List<Long> menuIds = new ObjectMapper().readValue(menuIdsJson, new TypeReference<List<Long>>() {});
 
+        // Verificar si alguno de los menús seleccionados ya está asociado a una oferta
+        for (Long menuId : menuIds) {
+            Optional<Menu> menu = menuService.obtenerPorId(menuId);
+            if (menu.isPresent() && menu.get().getOferta() != null) {
+                Oferta ofertaExistente = menu.get().getOferta();
+
+                // Eliminar la oferta existente
+                ofertaService.eliminarOferta(ofertaExistente.getId());
+
+                // Remover la asociación de todos los menús con esta oferta existente
+                List<Menu> menusAsociados = menuService.obtenerMenusPorOferta(ofertaExistente.getId());
+                for (Menu m : menusAsociados) {
+                    m.setOferta(null);
+                    menuService.CrearMenu(m);
+                }
+            }
+        }
+
+        // Manejar la imagen si está presente
+        if (imagenFile != null && !imagenFile.isEmpty()) {
+            Imagen imagen = manejarImagen(imagenFile);
+            nuevaOferta.setImagen(imagen);
+        }
+
+        // Crear la nueva oferta
+        Oferta ofertaCreada = ofertaService.CrearOferta(nuevaOferta);
+
+        // Asociar los menús con la nueva oferta
         if (!menuIds.isEmpty()) {
             for (Long menuId : menuIds) {
                 Optional<Menu> menu = menuService.obtenerPorId(menuId);
-                menu.get().setOferta(ofertaCreada);
-                menuService.CrearMenu(menu.orElse(null));
+                menu.ifPresent(m -> {
+                    m.setOferta(ofertaCreada);
+                    menuService.CrearMenu(m);
+                });
             }
         }
 

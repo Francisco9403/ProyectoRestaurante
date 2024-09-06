@@ -8,9 +8,11 @@ import java.util.List;
 
 public interface OfertaService {
 
-    Page<Oferta> obtenerTodos(int page, int size, String nombre, Double descuentoMin, Double descuentoMax);
+    Page<Oferta> obtenerTodos(int page, int size, String nombre, Double ofertaMin, Double ofertaMax);
 
     Oferta obtenerPorId(Long id);
+
+    Oferta obtenerPorNombre(String nombre);
 
     Oferta CrearOferta(Oferta oferta);
 

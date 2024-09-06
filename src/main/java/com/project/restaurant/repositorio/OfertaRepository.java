@@ -10,4 +10,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface OfertaRepository extends JpaRepository<Oferta, Long> {
     Page<Oferta> findByNombreContainingAndPorcentajeDescuentoBetween(String nombre, Double porcentajeMin, Double porcentajeMax, Pageable pageable);
+    Oferta findByNombre(String nombre);
 }
