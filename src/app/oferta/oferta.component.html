@@ -1,0 +1,42 @@
+<div class="filter-container">
+  <input type="text" class="form-control" [(ngModel)]="nombre" placeholder="Filtrar por nombre" />
+  <button class="btn btn-secondary" (click)="onSearch()">Buscar</button>
+  <button class="btn btn-secondary" (click)="clearFilters()">Limpiar Filtros</button>
+</div>
+
+
+<div class="container">
+  <h1 class="page-title">Nuestras Ofertas</h1>
+  @if (authService.isAuthenticated()) {
+    <div class="boton">
+      <button class="btn btn-secondary btn-padding" [routerLink]="['/oferta/new']">Agregar Oferta</button>
+    </div>
+  }
+
+  <div class="card-container">
+    @for (oferta of ofertas; track oferta) {
+      <div class="card" style="width: 18rem;">
+        @if (oferta.imagen) {
+          <img [src]="'data:' + oferta.imagen.fileContentType + ';base64,' + oferta.imagen.file" alt="{{ oferta.nombre }}">
+        }
+        <div class="card-body" style="overflow:hidden">
+          <h5 class="card-title">{{ oferta.nombre }}</h5>
+          <p class="card-text">{{ oferta.descripcion }}</p>
+          <p class="card-text">{{ oferta.porcentajeDescuento }}% de descuento</p>
+          @if (authService.isAuthenticated()) {
+            <div>
+              <button class="btn btn-secondary" (click)="deleteOferta(oferta)">Eliminar</button>
+              <button class="btn btn-secondary" [routerLink]="['/oferta/edit', oferta.id]">Modificar</button>
+            </div>
+          }
+        </div>
+      </div>
+    }
+  </div>
+
+  <div class="pagination-container">
+    <button class="btn btn-secondary" (click)="onPageChange(currentPage - 1)" [disabled]="currentPage === 0">Anterior</button>
+    <span class="page-indicator">Página {{ currentPage + 1 }} de {{ totalPages }}</span>
+    <button class="btn btn-secondary" (click)="onPageChange(currentPage + 1)" [disabled]="currentPage + 1 >= totalPages">Siguiente</button>
+  </div>
+</div>
