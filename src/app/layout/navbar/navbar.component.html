@@ -10,7 +10,7 @@
       <div class="nav-buttons">
         <a routerLink="/" class="nav-button"><b>Inicio</b></a>
         <a routerLink="/menu" class="nav-button"><b>Menú</b></a>
-        <a class="nav-button"><b>Contactos</b></a>
+        <a routerLink="/contacto" class="nav-button"><b>Contactos</b></a>
       </div>
       <p-menu #menu [model]="currentMenuItems" [popup]="true" class="menu-popup"></p-menu>
       <button (click)="menu.toggle($event)" class="menu-toggle-button text-center" >

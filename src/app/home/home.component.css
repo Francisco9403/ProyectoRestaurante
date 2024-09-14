@@ -78,3 +78,8 @@
 .section-image {
   width: 35%; /* Ajusta el ancho de la imagen según sea necesario */
 }
+.alert {
+  color: green;
+  font-weight: bold;
+  margin-top: 10px;
+}
