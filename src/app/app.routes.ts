@@ -27,13 +27,15 @@ export const routes: Routes = [
   },
   { path: 'oferta/new',
     component: OfertaFormComponent
-  }
-  ,  {
+  },
+  { path: 'oferta/edit/:id',
+    component: OfertaFormComponent
+  },
+  {
     path: 'ofertas', // Nueva ruta para ver la lista de ofertas
     component: OfertaComponent
-  }
-
-  , {
+  },
+  {
     path: 'contacto', // Nueva ruta para ver la lista de ofertas
     component: ContactoComponent
   }

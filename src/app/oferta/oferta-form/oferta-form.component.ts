@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormsModule } from "@angular/forms";
 import { MenuItem, MenuService, Oferta, Page } from "../../menu/menu.service";
+import {OfertaService} from "../oferta.service";
 
 @Component({
   selector: 'app-oferta-form',
@@ -23,7 +24,7 @@ export class OfertaFormComponent {
   pageSize: number = 3;
   totalPages: number = 0;
 
-  constructor(private menuService: MenuService, private router: Router) {}
+  constructor(private menuService: MenuService, private router: Router, private ofertaService: OfertaService) {}
 
   ngOnInit(): void {
     this.getMenus();

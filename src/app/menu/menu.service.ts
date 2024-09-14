@@ -91,11 +91,8 @@ export class MenuService {
     return this.http.delete<void>(`${this.apiUrl}/${id}`);
   }
 
-
-
-
   createOffer(formData: FormData): Observable<Oferta> {
-    return this.http.post<Oferta>(`${this.apiUrl}/nuevaOferta`, formData);
+    return this.http.post<Oferta>(`${environment.API_URL}/ofertas`, formData);
   }
 
   // Método para calcular el precio con descuento de un menú
