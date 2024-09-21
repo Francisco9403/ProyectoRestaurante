@@ -31,11 +31,12 @@ public class SecurityConfiguration {
         CsrfTokenRequestAttributeHandler requestHandler = new CsrfTokenRequestAttributeHandler();
         requestHandler.setCsrfRequestAttributeName(null);
         http.authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers(HttpMethod.GET, "/api/menus/**").permitAll() // Permite el acceso a los endpoints de menú
-                        .requestMatchers(HttpMethod.POST, "/api/menus").permitAll()
-                        .requestMatchers(HttpMethod.GET, "assets/*").permitAll()
-                        .anyRequest()
-                        .authenticated())
+                .requestMatchers(HttpMethod.GET, "/api/menus/**").permitAll() // Permite el acceso a los endpoints de menú
+                .requestMatchers(HttpMethod.POST, "/api/menus").permitAll()
+                .requestMatchers(HttpMethod.PUT, "/api/auth/modify-user-authority/**").permitAll() // Permite PUT en el endpoint
+                .requestMatchers(HttpMethod.GET, "assets/*").permitAll()
+                .anyRequest()
+                .authenticated())
                 .csrf(csrf -> csrf.csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
                         .csrfTokenRequestHandler(requestHandler))
                 .oauth2Login(Customizer.withDefaults())

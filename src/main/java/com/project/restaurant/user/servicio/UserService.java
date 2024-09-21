@@ -82,4 +82,11 @@ public class UserService {
         return oneByPublicId.map(userMapper::readUserDTOToUser);
     }
 
+    public User getUserById(Long id) {
+        return userRepository.findById(id).orElseThrow();
+    }
+
+    public User save(User user) {
+        return userRepository.save(user);
+    }
 }

@@ -1,4 +1,4 @@
-package com.project.restaurant.auth0;
+package com.project.restaurant.user.auth0;
 
 import com.project.restaurant.config.SecurityUtils;
 import com.project.restaurant.user.dto.ReadUserDTO;
@@ -33,7 +33,7 @@ public class Auth0Service {
     private String roleLandlordId;
 
     public void addLandlordRoleToUser(ReadUserDTO readUserDTO) {
-        if (readUserDTO.authorities().stream().noneMatch(role -> role.equals(SecurityUtils.ROLE_LANDLORD))) {
+        if (readUserDTO.authorities().stream().noneMatch(role -> role.equals(SecurityUtils.ROL_ADMIN))) { // Cambiar ROLE_LANDLORD a ROL_ADMIN
             try {
                 String accessToken = this.getAccessToken();
                 assignRoleById(accessToken, readUserDTO.email(), readUserDTO.publicId(), roleLandlordId);

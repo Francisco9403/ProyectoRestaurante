@@ -14,8 +14,9 @@ import java.util.stream.Stream;
 
 public class SecurityUtils {
 
-    public static final String ROLE_TENANT = "ROLE_TENANT";
-    public static final String ROLE_LANDLORD = "ROLE_LANDLORD";
+    public static final String ROL_EMPLEADO = "ROL_EMPLEADO";
+    public static final String ROL_ADMIN = "ROL_ADMIN"; // Antes ROLE_LANDLORD
+    public static final String ROL_USUARIO = "ROL_USUARIO";
 
     public static final String CLAIMS_NAMESPACE = "https://www.codecake.fr/roles";
 
@@ -51,18 +52,29 @@ public class SecurityUtils {
             user.setImageUrl(((String) attributes.get("picture")));
         }
 
-        if(attributes.get(CLAIMS_NAMESPACE) != null) {
+        // Manejo de roles
+        Set<Authority> authorities = new HashSet<>();
+        if (attributes.get(CLAIMS_NAMESPACE) != null) {
             List<String> authoritiesRaw = (List<String>) attributes.get(CLAIMS_NAMESPACE);
-            Set<Authority> authorities = authoritiesRaw.stream()
+            authorities = authoritiesRaw.stream()
                     .map(authority -> {
                         Authority auth = new Authority();
                         auth.setName(authority);
                         return auth;
                     }).collect(Collectors.toSet());
-            user.setAuthorities(authorities);
         }
+
+        // Asignar rol por defecto si no hay roles
+        if (authorities.isEmpty()) {
+            Authority defaultRole = new Authority();
+            defaultRole.setName(ROL_USUARIO);  // Asigna el rol por defecto ROL_EMPLEADO
+            authorities.add(defaultRole);
+        }
+
+        user.setAuthorities(authorities);
         return user;
     }
+
 
     public static List<SimpleGrantedAuthority> extractAuthorityFromClaims(Map<String, Object> claims) {
         return mapRolesToGrantedAuthorities(getRolesFromClaims(claims));
@@ -73,7 +85,7 @@ public class SecurityUtils {
     }
 
     private static List<SimpleGrantedAuthority> mapRolesToGrantedAuthorities(Collection<String> roles) {
-        return roles.stream().filter(role -> role.startsWith("ROLE_")).map(SimpleGrantedAuthority::new).toList();
+        return roles.stream().filter(role -> role.startsWith("ROL_")).map(SimpleGrantedAuthority::new).toList();
     }
 
     public static boolean hasCurrentUserAnyOfAuthorities(String ...authorities) {

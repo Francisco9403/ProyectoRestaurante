@@ -1,6 +1,7 @@
 package com.project.restaurant.user.controlador;
 
 import com.project.restaurant.user.dto.ReadUserDTO;
+import com.project.restaurant.user.modelo.User;
 import com.project.restaurant.user.servicio.UserService;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpHeaders;
@@ -14,13 +15,23 @@ import org.springframework.web.bind.annotation.*;
 
 import java.text.MessageFormat;
 import java.util.Map;
+import java.util.Optional;
+
+
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+
+import java.util.Optional;
+import java.util.Set;
 
 @RestController
 @RequestMapping("/api/auth")
 public class AuthController {
 
     private final UserService userService;
-
     private final ClientRegistration registration;
 
     public AuthController(UserService userService, ClientRegistrationRepository registration) {
@@ -37,6 +48,19 @@ public class AuthController {
             userService.syncWithIdp(user, forceResync);
             ReadUserDTO connectedUser = userService.getAuthenticatedUserFromSecurityContext();
             return new ResponseEntity<>(connectedUser, HttpStatus.OK);
+        }
+    }
+
+    @PutMapping("/modify-user-authority/{id}")
+    public ResponseEntity<User> modifyUser(@PathVariable Long id, @RequestBody UserAuthorityDTO userAuthorityDTO) {
+        Optional<User> userOptional = Optional.ofNullable(userService.getUserById(id));
+        if (userOptional.isPresent()) {
+            User user = userOptional.get();
+            user.setAuthorities(userAuthorityDTO.getAuthorities());  // Solo se actualizan las autoridades
+            userService.save(user);
+            return new ResponseEntity<>(user, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
 
