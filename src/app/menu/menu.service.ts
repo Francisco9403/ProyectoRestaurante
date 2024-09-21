@@ -28,6 +28,11 @@ export interface MenuItem {
   oferta?: Oferta | null;
 }
 
+export interface CartItem {
+  item: MenuItem; // El producto del menú
+  quantity: number; // La cantidad de este producto en el carrito
+}
+
 export interface Oferta {
   id: number;
   nombre: string;

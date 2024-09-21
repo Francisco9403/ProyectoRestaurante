@@ -6,6 +6,7 @@ import {MenuFormComponent} from "./menu/menu-form/menu-form.component";
 import {OfertaFormComponent} from "./oferta/oferta-form/oferta-form.component";
 import {OfertaComponent} from "./oferta/oferta.component";
 import {ContactoComponent} from "./contacto/contacto.component";
+import {CartComponent} from "./cart/cart.component";
 
 // Definición de las rutas de la aplicación
 export const routes: Routes = [
@@ -38,5 +39,9 @@ export const routes: Routes = [
   {
     path: 'contacto', // Nueva ruta para ver la lista de ofertas
     component: ContactoComponent
+  },
+  {
+    path: 'carrito',
+    component: CartComponent
   }
 ];

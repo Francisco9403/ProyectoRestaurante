@@ -9,7 +9,7 @@
 
 <div class="container">
   <h1 class="page-title">Nuestros Productos</h1>
-  @if (authService.isAuthenticated()) {
+  @if (authService.hasRoleEmpleado()) {
     <div class="boton">
       <button class="btn btn-secondary btn-padding" [routerLink]="['/menu/new']">Agregar Producto</button>
       <button class="btn btn-secondary btn-padding" [routerLink]="['/oferta/new']">Agregar Oferta</button>
@@ -37,10 +37,15 @@
             <span>Precio: {{ menu.precio }}</span>
             }
           </p>
-          @if (authService.isAuthenticated()) {
+          @if (authService.hasRoleEmpleado()) {
             <div>
               <button class="btn btn-secondary" (click)="deleteMenuItem(menu)">Eliminar</button>
               <button class="btn btn-secondary" [routerLink]="['/menu/edit', menu.id]">Modificar</button>
+            </div>
+          }
+          @if (authService.hasRoleCliente()) {
+            <div>
+              <button class="btn btn-secondary" (click)="addToCart(menu)">Agregar al carrito</button>
             </div>
           }
           </div>

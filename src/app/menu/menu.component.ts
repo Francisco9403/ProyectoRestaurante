@@ -3,6 +3,7 @@ import { MenuService, MenuItem, Page } from './menu.service';
 import {AuthService} from "../auth/auth.service";
 import {FormsModule} from "@angular/forms";
 import {RouterLink} from "@angular/router";
+import {CartService} from "../cart/cart.service";
 
 @Component({
   selector: 'app-menu',
@@ -23,6 +24,7 @@ export class MenuComponent implements OnInit {
   pageSize: number = 3;
   totalPages: number = 0;
   authService = inject(AuthService);
+  cartService = inject(CartService);
 
   constructor(private menuService: MenuService) {}
 
@@ -63,5 +65,11 @@ export class MenuComponent implements OnInit {
   // Método para obtener el precio con descuento
   getPrecioConDescuento(menu: MenuItem): number {
     return this.menuService.calcularPrecioConDescuento(menu);
+  }
+
+  addToCart(menu: MenuItem): void {
+    if (this.authService.hasRoleCliente()) {
+      this.cartService.addToCart(menu);
+    }
   }
 }

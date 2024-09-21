@@ -87,4 +87,24 @@ export class AuthService {
     return this.fetchUser$().value!.authorities!
       .some((authority: string) => authorities.includes(authority));
   }
+
+  getUserAuthority(): string[] {
+    const user = this.fetchUser$().value;
+    // Verifica si el usuario está conectado y si tiene roles
+    console.log(user?.authorities)
+    if (user && user.email !== this.notConnected) {
+      return user.authorities || []; // Retorna los roles o un array vacío si no hay roles
+    }
+    return []; // Retorna un array vacío si el usuario no está conectado
+  }
+
+  hasRoleCliente(): boolean {
+    console.log(this.getUserAuthority().includes('ROL_CLIENTE'))
+    return this.getUserAuthority().includes('ROL_CLIENTE');
+  }
+
+  hasRoleEmpleado(): boolean {
+    console.log(this.getUserAuthority().includes('ROL_EMPLEADO'))
+    return this.getUserAuthority().includes('ROL_EMPLEADO');
+  }
 }

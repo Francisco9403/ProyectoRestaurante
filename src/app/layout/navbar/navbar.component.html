@@ -2,7 +2,7 @@
   <p-toolbar class="toolbar bg-white border-top-none border-x-none border-noround">
     <div class="toolbar-group-left">
       <div class="logo-container">
-        <img src="https://e7.pngegg.com/pngimages/984/246/png-clipart-logo-brand-product-design-font-menu-del-restaurante-label-logo.png" alt="Restaurant Logo">
+        <img src="assets/logo.png" alt="Restaurant Logo">
         <div class="logo-text">Restaurant</div>
       </div>
     </div>
@@ -11,6 +11,9 @@
         <a routerLink="/" class="nav-button"><b>Inicio</b></a>
         <a routerLink="/menu" class="nav-button"><b>Menú</b></a>
         <a routerLink="/contacto" class="nav-button"><b>Contactos</b></a>
+        @if (!authService.hasRoleEmpleado()) {
+            <a routerLink="/carrito" class="nav-button"><b>Carrito</b></a>
+        }
       </div>
       <p-menu #menu [model]="currentMenuItems" [popup]="true" class="menu-popup"></p-menu>
       <button (click)="menu.toggle($event)" class="menu-toggle-button text-center" >

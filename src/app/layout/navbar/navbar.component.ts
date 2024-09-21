@@ -7,7 +7,7 @@ import { DialogService } from 'primeng/dynamicdialog';
 import { MenuItem } from 'primeng/api';
 import { AuthService } from '../../auth/auth.service';
 import { User } from '../../model/user.model';
-import {AvatarComponent} from "./avatar/avatar.component";
+import { AvatarComponent } from "./avatar/avatar.component";
 import { ToastService } from '../toast.service';
 
 @Component({
@@ -22,13 +22,12 @@ import { ToastService } from '../toast.service';
   ],
   providers: [DialogService],
   templateUrl: './navbar.component.html',
-  styleUrls: ['./navbar.component.scss']
+  styleUrls: ['./navbar.component.css'] // Asegúrate de que el archivo CSS esté referenciado aquí
 })
 export class NavbarComponent implements OnInit {
 
   // Servicios inyectados
   authService = inject(AuthService);
-
   toastService = inject(ToastService);
 
   // Métodos para el inicio y cierre de sesión
@@ -62,6 +61,14 @@ export class NavbarComponent implements OnInit {
       return [
         {
           label: "Log out",
+          style: {
+            backgroundColor: '#c3c3c3',
+            color: 'white',
+            fontWeight: 'bold',
+            padding: '10px 17px',
+            borderRadius: '5px',
+            border: 'none'
+          },
           command: this.logout
         }
       ];
@@ -69,11 +76,26 @@ export class NavbarComponent implements OnInit {
       return [
         {
           label: "Sign up",
-          styleClass: "font-bold",
+          style: {
+            backgroundColor: '#4CAF50',
+            color: 'white',
+            fontWeight: 'bold',
+            padding: '10px 20px',
+            borderRadius: '5px',
+            border: 'none'
+          },
           command: this.login
         },
         {
           label: "Log in",
+          style: {
+            backgroundColor: '#008CBA',
+            color: 'white',
+            fontWeight: 'bold',
+            padding: '10px 20px',
+            borderRadius: '5px',
+            border: 'none'
+          },
           command: this.login
         }
       ];

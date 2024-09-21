@@ -1,0 +1,17 @@
+@if (cartItems.length === 0) {
+  <div>
+    <p>No hay productos en el carrito.</p>
+  </div>
+}
+@if (cartItems.length > 0) {
+  <ul>
+    @for (cartItem of cartItems; track cartItem) {
+      <li>
+        {{ cartItem.item.nombre }} - {{ cartItem.item.precio }} (Cantidad: {{ cartItem.quantity }}) -
+        Subtotal: {{ getSubtotal(cartItem.item, cartItem.quantity) }}
+        <button (click)="removeFromCart(cartItem.item)">Eliminar</button>
+      </li>
+    }
+  </ul>
+}
+<h3>Total: {{ getTotal() }}</h3>
